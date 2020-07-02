@@ -7,10 +7,26 @@ function saveLoginTime(startTime,endTime){
 	store.loginTime = new Date();
 	http.post('/user/saveLoginLong/'+userid+'/student', {
 		appMac: uni.getStorageSync("appMac"),
-		startTime:startTime,
-		endTime:endTime
+		startTime:format(startTime),
+		endTime:format(endTime)
 	});
 };
+
+function format(value) {
+	let date = new Date(value)
+	let y = date.getFullYear()
+	let MM = date.getMonth() + 1
+	MM = MM < 10 ? ('0' + MM) : MM
+	let d = date.getDate()
+	d = d < 10 ? ('0' + d) : d
+	let h = date.getHours()
+	h = h < 10 ? ('0' + h) : h
+	let m = date.getMinutes()
+	m = m < 10 ? ('0' + m) : m
+	let s = date.getSeconds()
+	s = s < 10 ? ('0' + s) : s
+	return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+}
 
 async function saveStudyProgress(learnTime,totalTime,currentTime,studentBaseId,courseId,mateId){
 	await http.post('/studyProgress/saveStudyProgress/'+studentBaseId+'/'+courseId+'/'+mateId, {
