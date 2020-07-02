@@ -158,22 +158,22 @@ Vue.prototype.schoolData = [
 	}, {
 		schoolCode: '11078',
 		schoolName: '广州大学',
-		baseUrl: "http://222.201.56.23/appsN",
+		baseUrl: "http://222.201.56.23/apps",
 		imgUrl:"https://cjjw.gzhu.edu.cn/gzdx"
 	}, {
 		schoolCode: "10571",
 		schoolName: "广东医科大学",
-		baseUrl: "https://jjgl.gdmu.edu.cn/apps",
+		baseUrl: "http://jjgl.gdmu.edu.cn:8089/apps",
 		imgUrl:"https://jjgl.gdmu.edu.cn/edu3"
 	}, {
 		schoolCode: "10601",
 		schoolName: "桂林医学院",
-		baseUrl: "http://jjywap.glmc.edu.cn/apps",
+		baseUrl: "http://jxjyglpt.glmc.edu.cn/apps",
 		imgUrl:"https://jxjyglpt.glmc.edu.cn"
 	}, {
 		schoolCode: "10598",
 		schoolName: "广西医科大学",
-		baseUrl: "http://210.36.48.152:8090/apps",
+		baseUrl: "http://210.36.48.152:8089/apps",
 		imgUrl:"http://210.36.48.152"
 	}, {
 		schoolCode: "10560",
@@ -183,22 +183,22 @@ Vue.prototype.schoolData = [
 	}, {
 		schoolCode: "10559",
 		schoolName: "暨南大学",
-		baseUrl: "http://jndx.acad.com.cn:8089/apps",
+		baseUrl: "http://jndx.acad.com.cn:8088/apps",
 		imgUrl:"http://jndx.acad.com.cn"
 	}, {
 		schoolCode: "11846",
 		schoolName: "广东外语外贸大学",
-		baseUrl: "http://gwcj.gdufs.edu.cn:8090/apps",
+		baseUrl: "http://gwcj.gdufs.edu.cn:8089/apps",
 		imgUrl:"http://gwcj.gdufs.edu.cn"
 	}, {
 		schoolCode: "12962",
 		schoolName: "广东省外语艺术职业学院",
-		baseUrl: "http://47.107.31.78:8090/apps",
+		baseUrl: "http://47.107.31.78:8089/apps",
 		imgUrl:"http://47.107.31.78"
 	}, {
 		schoolCode: "13810",
 		schoolName: "肇庆医学高等专科学院",
-		baseUrl: "http://cjjwgl.zqmc.edu.cn/yzb/apps",
+		baseUrl: "http://cjjwgl.zqmc.edu.cn/yza/apps",
 		imgUrl:"http://cjjwgl.zqmc.edu.cn/zqyz"
 	}
 ]
