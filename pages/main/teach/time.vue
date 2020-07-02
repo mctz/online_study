@@ -1,0 +1,36 @@
+<template>
+	<view class="content" style="margin-bottom: 50px;">
+		<view class="input-row" style="color:#3F536E;line-height: 20px;font-size: 15px;background-color:#B2B2B2;">
+			<text style="width: 50%;">课程名称</text>
+			<text style="width: 25%;">学习时长</text>
+			<text style="width: 25%;">总时长</text>
+		</view>
+		<view class="input-row border" style="color: grey;line-height: 20px;margin-top: 10px;font-size: 15px;" v-for="(n, i) in studyProgress" v-bind:key="i">
+			<text style="width: 50%;">{{studyProgress[i].courseName}}</text>
+			<text style="width: 25%;">{{studyProgress[i].learnTotalTime | formatLong}}</text>
+			<text style="width: 25%;">{{studyProgress[i].totalTime | formatLong}}</text>
+		</view>
+	</view>
+</template> 
+
+<script>
+	export default {
+		data() {
+			return {
+				list:[],
+				studyProgress:uni.getStorageSync("courseTotalTime"),
+			}
+		},
+		onPullDownRefresh() {
+			this.loadJs.reloadCourseTotalTime(this.$store.baseInfoId);
+			this.studyProgress = uni.getStorageSync("courseTotalTime");
+			uni.stopPullDownRefresh();
+		},
+		async onReady() {
+			if(!uni.getStorageSync("courseTotalTime")){
+				await this.loadJs.reloadCourseTotalTime(this.$store.baseInfoId);
+			}
+			this.studyProgress = uni.getStorageSync("courseTotalTime");
+		}
+	}
+</script>

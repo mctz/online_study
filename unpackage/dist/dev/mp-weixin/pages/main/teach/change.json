@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "学籍异动",
+  "usingComponents": {
+    "line-text": "/components/line-text"
+  }
+}

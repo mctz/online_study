@@ -1,0 +1,66 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/login/pwd",
+    "pages/main/study",
+    "pages/main/message",
+    "pages/main/teach",
+    "pages/main/user",
+    "pages/main/study/course",
+    "pages/main/user/base",
+    "pages/main/user/student",
+    "pages/main/user/payment",
+    "pages/main/user/password",
+    "pages/main/user/settings",
+    "pages/main/user/feedback",
+    "pages/main/user/about",
+    "pages/main/user/enroll",
+    "pages/main/teach/teach",
+    "pages/main/teach/time",
+    "pages/main/teach/score",
+    "pages/main/teach/change",
+    "pages/main/webView",
+    "pages/main/fileView"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "学苑教育",
+    "navigationBarBackgroundColor": "#567ca3",
+    "backgroundColor": "#F8F8F8",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#7a7e83",
+    "selectedColor": "#0faeff",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/main/study",
+        "text": "学习",
+        "iconPath": "static/img/button/study.png",
+        "selectedIconPath": "static/img/button/studyHL.png"
+      },
+      {
+        "pagePath": "pages/main/message",
+        "text": "消息",
+        "iconPath": "static/img/button/message.png",
+        "selectedIconPath": "static/img/button/messageHL.png"
+      },
+      {
+        "pagePath": "pages/main/teach",
+        "text": "教学",
+        "iconPath": "static/img/button/service.png",
+        "selectedIconPath": "static/img/button/serviceHL.png"
+      },
+      {
+        "pagePath": "pages/main/user",
+        "text": "我的",
+        "iconPath": "static/img/button/user.png",
+        "selectedIconPath": "static/img/button/userHL.png"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}

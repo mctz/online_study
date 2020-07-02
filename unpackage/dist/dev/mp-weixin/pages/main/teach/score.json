@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "考试成绩",
+  "usingComponents": {
+    "line-text": "/components/line-text"
+  }
+}

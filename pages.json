@@ -1,0 +1,161 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/login/login",
+			"style": {
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText": "登录"
+			}
+		}, {
+			"path": "pages/login/pwd",
+			"style": {
+				"navigationBarTitleText": "找回密码"
+			}
+		}, {
+			"path": "pages/main/study",
+			"style": {
+				"navigationBarTitleText": "学习"
+			}
+		}, {
+			"path": "pages/main/message",
+			"style": {
+				"navigationBarTitleText": "消息"
+			}
+		}, {
+			"path": "pages/main/teach",
+			"style": {
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText": "教学"
+			}
+		}, {
+			"path": "pages/main/user",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		}, {
+			"path": "pages/main/user/base",
+			"style": {
+				"navigationBarTitleText": "基本信息"
+			}
+		}, {
+			"path": "pages/main/user/student",
+			"style": {
+				"navigationBarTitleText": "学籍信息"
+			}
+		}, {
+			"path": "pages/main/user/payment",
+			"style": {
+				"navigationBarTitleText": "缴费信息"
+			}
+		}, {
+			"path": "pages/main/user/password",
+			"style": {
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText": "修改密码"
+			}
+		}, {
+			"path": "pages/main/user/settings",
+			"style": {
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText": "系统设置"
+			}
+		}, {
+			"path": "pages/main/user/feedback",
+			"style": {
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText": "意见反馈"
+			}
+		}, {
+			"path": "pages/main/user/about",
+			"style": {
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText": "关于我们"
+			}
+		}, {
+			"path": "pages/main/user/enroll",
+			"style": {
+				"navigationBarTitleText": "录取通知书"
+			}
+		}, {
+			"path": "pages/main/teach/teach",
+			"style": {
+				"navigationBarTitleText": "教学计划"
+			}
+		}, {
+			"path": "pages/main/teach/time",
+			"style": {
+				"navigationBarTitleText": "学习时长"
+			}
+		}, {
+			"path": "pages/main/teach/score",
+			"style": {
+				"navigationBarTitleText": "考试成绩"
+			}
+		}, {
+			"path": "pages/main/teach/change",
+			"style": {
+				"navigationBarTitleText": "学籍异动"
+			}
+		}, {
+			"path": "pages/main/study/course",
+			"style": {
+				"navigationBarTitleText": "课程详情"
+			}
+		}, {
+			"path": "pages/main/study/courseExam",
+			"style": {
+				"navigationBarTitleText": "随堂练习"
+			}
+		}, {
+			"path": "pages/main/webView",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		}, {
+			"path": "pages/main/fileView",
+			"style": {
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText": ""
+			}
+		}, {
+			"path": "pages/main/videoView",
+			"style": {
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText": ""
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#7a7e83",
+		"selectedColor": "#0faeff",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/main/study",
+			"text": "学习",
+			"iconPath": "static/img/button/study.png",
+			"selectedIconPath": "static/img/button/studyHL.png"
+		},{
+			"pagePath": "pages/main/message",
+			"text": "消息",
+			"iconPath": "static/img/button/message.png",
+			"selectedIconPath": "static/img/button/messageHL.png"
+		},{
+			"pagePath": "pages/main/teach",
+			"text": "教学",
+			"iconPath": "static/img/button/service.png",
+			"selectedIconPath": "static/img/button/serviceHL.png"
+		}, {
+			"pagePath": "pages/main/user",
+			"text": "我的",
+			"iconPath": "static/img/button/user.png",
+			"selectedIconPath": "static/img/button/userHL.png"
+		}]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "学苑教育",
+		"navigationBarBackgroundColor":"#567ca3",
+		"backgroundColor": "#F8F8F8",
+		"enablePullDownRefresh": true
+	}
+}

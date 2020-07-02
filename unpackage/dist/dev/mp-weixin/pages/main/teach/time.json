@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "学习时长",
+  "usingComponents": {
+    "line-text": "/components/line-text"
+  }
+}

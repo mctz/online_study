@@ -1,0 +1,7 @@
+{
+  "enablePullDownRefresh": false,
+  "navigationBarTitleText": "教学",
+  "usingComponents": {
+    "icon-button": "/components/icon-button"
+  }
+}

@@ -1,0 +1,1 @@
+<web-view src="{{this.$store.imgUrl+'/exclude/cx.html?firstOpen=N&certNum='+certNum+'&studentName='+studentName}}"></web-view>
