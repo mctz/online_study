@@ -1,3 +1,4 @@
+import Base64 from './base64.js'
 function get(url, data) {
     var promise = new Promise((resolve, reject) => {
 		let baseUrl = uni.getStorageSync("baseUrl");

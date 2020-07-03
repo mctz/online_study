@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App'
 import http from './pages/api/request.js'
-import Base64 from 'pages/api/base64.js'
 import loadJs from './pages/api/loadData.js'
 import tools from './pages/api/tools.js'    
 import store from './store'
@@ -16,7 +15,6 @@ const app = new Vue({
 Vue.config.productionTip = false
 Vue.prototype.$http = http
 Vue.prototype.$store = store
-Vue.prototype.Base64 = Base64
 Vue.prototype.loadJs = loadJs
 Vue.prototype.tools = tools
 
