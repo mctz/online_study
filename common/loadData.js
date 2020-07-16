@@ -215,7 +215,47 @@ async function reloadTimetable(studentBaseId,term){
 		"term":term
 	}).then(res => {
 		let timetable = JSON.parse(JSON.parse(res).list);
-		uni.setStorageSync("timetable",timetable);
+		var planCourse = uni.getStorageSync("planCourse");
+		
+		var onlineCourse = "";
+		var timeArray = [];
+		for(var index=0;index<planCourse.length;index++){
+			if(planCourse[index].isCurTermCourse === 'Y'){
+				onlineCourse += planCourse[index].course +",";
+			}
+		}
+		for(var index=0;index<28;index++){
+			var obj = new Object;
+			obj.title = "";
+			obj.content = "";
+			timeArray[index] = obj;
+		}
+		for(var index=0;index<timetable.length;index++){
+			if(onlineCourse.indexOf(timetable[index].course)>=0){
+				continue;
+			}
+			var weeks = timetable[index].week;
+			var time = (timetable[index].timePeriod/10)-1;
+			if(weeks.indexOf(",")>0){
+				var weekArray = weeks.split(",");
+				for(var i=0;i<weekArray.length;i++){
+					var week = weekArray[i]-1;
+					timeArray[week*4+time].title += timetable[index].courseName + ";";
+					timeArray[week*4+time].content += "时间：" + timetable[index].courseTimeName + "\n" 
+						+ "课室："+timetable[index].classroomName +"\n"+ "授课教师："+timetable[index].teacherName + "\n\n";
+				}
+			}else if(weeks==null || weeks===""){
+				timeArray[time].title += timetable[index].courseName + ";";
+				timeArray[week*4+time].content += "时间：" + timetable[index].courseTimeName + "\n"
+					+ "课室："+timetable[index].classroomName +"\n"+ "授课教师："+timetable[index].teacherName + "\n\n";
+			}else {
+				var week = weeks-1;
+				timeArray[week*4+time].title += timetable[index].courseName + ";";
+				timeArray[week*4+time].content += "时间：" + timetable[index].courseTimeName + "\n"
+					+ "课室："+timetable[index].classroomName +"\n"+ "授课教师："+timetable[index].teacherName + "\n\n";
+			}
+		}
+		uni.setStorageSync("timetable",timeArray);
 	});
 	uni.hideLoading();
 };

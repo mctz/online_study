@@ -37,7 +37,6 @@
 <script>
 	import {mapState} from 'vuex'
 	import uCharts from '@/components/u-charts/u-charts.js';
-	//import  { isJSON } from '@/common/checker.js';
 	var _self;
 	export default {
 		computed: mapState(['hasLogin', 'userName']),

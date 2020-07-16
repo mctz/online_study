@@ -11,14 +11,18 @@
         "nvueCompiler" : "uni-app",
         "compilerVersion" : 3,
         "splashscreen" : {
-            "alwaysShowBeforeRender" : false,
+            "alwaysShowBeforeRender" : true,
             "waiting" : true,
             "autoclose" : true,
             "delay" : 0
         },
         /* 模块配置 */
         "modules" : {
-            "VideoPlayer" : {}
+            "VideoPlayer" : {},
+            "OAuth" : {},
+            "Payment" : {},
+            "SQLite" : {},
+            "Push" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -38,14 +42,16 @@
                     "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>"
                 ],
-                "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ]
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ]
             },
             /* ios打包配置 */
             "ios" : {},
             /* SDK配置 */
             "sdkConfigs" : {
                 "ad" : {},
-                "oauth" : {}
+                "oauth" : {},
+                "payment" : {},
+                "push" : {}
             },
             "icons" : {
                 "android" : {
@@ -79,6 +85,9 @@
                     }
                 }
             }
+        },
+        "uniStatistics" : {
+            "enable" : true
         }
     },
     /* 快应用特有相关 */
@@ -89,19 +98,45 @@
         "setting" : {
             "urlCheck" : false
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "mp-alipay" : {
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "mp-baidu" : {
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "mp-toutiao" : {
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "h5" : {
         "title" : "广东学苑",
-        "domain" : "127.0.0.1:18081/xy"
+        "domain" : "127.0.0.1:18081/xy",
+        "uniStatistics" : {
+            "enable" : true
+        },
+        "router" : {
+            "mode" : "hash"
+        }
+    },
+    "uniStatistics" : {
+        "enable" : true
+    },
+    "mp-qq" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
     }
 }

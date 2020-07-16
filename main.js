@@ -58,13 +58,14 @@ Vue.prototype.CODE_MSGTYPE = "CodeMsgType";
 Vue.prototype.CODE_TERMTYPE = "CodeTermType";
 Vue.prototype.CODE_OVERVIEWTYPE = "CodeCourseOverviewType";
 Vue.prototype.CODE_EXAMTYPE = "CodeExamType";
+Vue.prototype.CODE_WEEK = "CodeWeek";
 
 Vue.prototype.RESPONSE_OK = 0;
 Vue.prototype.RESPONSE_ERROR = 1;
 Vue.prototype.RESPONSE_TIPS = 2;
 Vue.prototype.ATTACHS = "/edu3/attachs/";
 Vue.prototype.ATTACHS_STU = "/edu3/attachs/common/students/";
-Vue.prototype.debugLevel = 3;
+Vue.prototype.debugLevel = 2;
 
 Vue.prototype.openFile = function(url) {
 	uni.downloadFile({
@@ -178,8 +179,8 @@ Vue.prototype.schoolData = [
 	{
 		schoolCode: "gdxy",//学校代码
 		schoolName: "学苑在线",//学校名称
-		baseUrl: "http://192.168.1.187:18082/apps",//接口地址(ios)
-		imgUrl:"http://192.168.1.187:18081/xy"//成教系统地址
+		baseUrl: "http://127.0.0.1:18082/apps",//接口地址(ios)
+		imgUrl:"http://127.0.0.1:18081/xy"//成教系统地址
 	}, {
 		schoolCode: '11078',
 		schoolName: '广州大学',

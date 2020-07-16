@@ -3,7 +3,6 @@ import dokey from './encode/dokey.js';
 import md5 from './encode/md5.js';
 import Vue from 'vue';
 
-const http = new Request();
 let debugLevel = uni.getStorageSync("debugLevel");
 let baseUrl = uni.getStorageSync("baseUrl");
 

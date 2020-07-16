@@ -25,7 +25,6 @@
 <script>
 	import lineText from '@/components/line-text.vue'
 	import uCharts from '@/components/u-charts/u-charts.js';
-	//import  { isJSON } from '@/common/checker.js';
 	var _self;
 	export default {
 		components:{lineText},
@@ -35,10 +34,14 @@
 				classInfo:uni.getStorageSync("classInfo"),
 			}
 		},
-		onLoad(option) {
+		async onLoad(option) {
 			_self = this;
-			this.getServerData();
 			this.classesId = option.classesId
+			if(!uni.getStorageSync("classInfo")){
+				await this.loadJs.reloadClasses(this.classesId);
+			}
+			this.classInfo = uni.getStorageSync("classInfo");
+			this.getServerData();
 		},
 		async onPullDownRefresh() {
 			if(this.classesId){
@@ -46,12 +49,6 @@
 				this.classInfo = uni.getStorageSync("classInfo");
 			}
 			uni.stopPullDownRefresh();
-		},
-		async onReady() {
-			if(!uni.getStorageSync("classInfo")){
-				await this.loadJs.reloadClasses(this.classesId);
-			}
-			this.classInfo = uni.getStorageSync("classInfo");
 		},
 		methods:{
 			getServerData(){
