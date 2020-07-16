@@ -1,22 +1,20 @@
 import Vue from 'vue'
 import App from './App'
-import http from './pages/api/request.js'
-import loadJs from './pages/api/loadData.js'
-import tools from './pages/api/tools.js'    
+import http from './common/request.js'
+import loadJs from './common/loadData.js'
 import store from './store'
 
 App.mpType = 'app'
 
+Vue.config.productionTip = false
 const app = new Vue({
 	store,
 	...App
 })
 
-Vue.config.productionTip = false
 Vue.prototype.$http = http
 Vue.prototype.$store = store
 Vue.prototype.loadJs = loadJs
-Vue.prototype.tools = tools
 
 Vue.prototype.now = Date.now || function () {  
     return new Date().getTime();  
@@ -27,6 +25,14 @@ Vue.prototype.date = function(){
 
 Vue.prototype.isArray = Array.isArray || function (obj) {  
     return obj instanceof Array;  
+};
+
+Vue.prototype.nvls = function(...obj){
+	for(var i=0;i<obj.length;i++){
+		if(obj[i]!=null && obj[i]!=""){
+			return obj[i];
+		}
+	}
 };
 
 Vue.prototype.CODE_SEX = "CodeSex";
@@ -58,6 +64,7 @@ Vue.prototype.RESPONSE_ERROR = 1;
 Vue.prototype.RESPONSE_TIPS = 2;
 Vue.prototype.ATTACHS = "/edu3/attachs/";
 Vue.prototype.ATTACHS_STU = "/edu3/attachs/common/students/";
+Vue.prototype.debugLevel = 3;
 
 Vue.prototype.openFile = function(url) {
 	uni.downloadFile({
@@ -147,12 +154,32 @@ Vue.filter('getDictName', function (value,code) {
 	}
 	return uni.getStorageSync("dict_"+code+"_"+value);
 })
+Vue.filter('getDictValue', function (name,code) {
+	if(name==null){
+		return "";
+	}
+	if(!uni.getStorageSync("dict_"+code+"_"+name)){
+		loadJs.reloadDict2(name,code);
+	}
+	return uni.getStorageSync("dict_"+code+"_"+name);
+})
+
+Vue.filter('getConfigValue', function (code) {
+	if(code==null){
+		return "";
+	}
+	if(!uni.getStorageSync("config_"+code)){
+		loadJs.reloadConfig(code);
+	}
+	return uni.getStorageSync("config_"+code);
+})
+
 Vue.prototype.schoolData = [
 	{
 		schoolCode: "gdxy",//学校代码
 		schoolName: "学苑在线",//学校名称
-		baseUrl: "http://192.168.1.187:18088/apps",//接口地址(ios)
-		imgUrl:"http://192.168.1.187:18080/xy"//成教系统地址
+		baseUrl: "http://192.168.1.187:18082/apps",//接口地址(ios)
+		imgUrl:"http://192.168.1.187:18081/xy"//成教系统地址
 	}, {
 		schoolCode: '11078',
 		schoolName: '广州大学',

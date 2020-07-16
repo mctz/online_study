@@ -4,12 +4,17 @@
 			"path": "pages/login/login",
 			"style": {
 				"enablePullDownRefresh":false,
-				"navigationBarTitleText": "登录"
+				"navigationBarTitleText": ""
 			}
 		}, {
 			"path": "pages/login/pwd",
 			"style": {
 				"navigationBarTitleText": "找回密码"
+			}
+		}, {
+			"path": "pages/login/wx",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		}, {
 			"path": "pages/main/study",
@@ -41,6 +46,11 @@
 			"path": "pages/main/user/student",
 			"style": {
 				"navigationBarTitleText": "学籍信息"
+			}
+		}, {
+			"path": "pages/main/user/classes",
+			"style": {
+				"navigationBarTitleText": "班级信息"
 			}
 		}, {
 			"path": "pages/main/user/payment",
@@ -97,14 +107,35 @@
 				"navigationBarTitleText": "学籍异动"
 			}
 		}, {
+			"path": "pages/main/teach/timetable",
+			"style": {
+				"navigationBarTitleText": "课表"
+			}
+		}, {
 			"path": "pages/main/study/course",
 			"style": {
 				"navigationBarTitleText": "课程详情"
 			}
 		}, {
-			"path": "pages/main/study/courseExam",
+			"path": "pages/main/study/exam",
 			"style": {
 				"navigationBarTitleText": "随堂练习"
+			}
+		}, {
+			"path": "pages/main/study/topic",
+			"style": {
+				"navigationBarTitleText": "论坛"
+			}
+		}, {
+			"path": "pages/main/study/reply",
+			"style": {
+				"navigationBarTitleText": "回复"
+			}
+		}, {
+			"path": "pages/main/study/exercise",
+			"style": {
+				/* "enablePullDownRefresh":false, */
+				"navigationBarTitleText": "课后作业"
 			}
 		}, {
 			"path": "pages/main/webView",

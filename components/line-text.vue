@@ -20,13 +20,12 @@
 </script>
 <style lang="scss">
 	.text {
-		margin-top: 15rpx;
-		margin-bottom: 15rpx;
+		padding-top: 15rpx;
+		padding-bottom: 15rpx;
 		padding-right: 10rpx;
-		height: 50rpx;
 		line-height: 35rpx;
 		text-align: center;
-		font-size: 28rpx;
+		font-size: 14px;
 		font-weight: normal;
 	}
 </style>

@@ -1,9 +1,16 @@
 <script>
 	export default {
-		onLaunch: function() {
+		onLaunch: function(option) {
 			this.$store.loginTime = this.date();
 			this.$store.onLaunch = 'Y';
-			console.log('App Launch:index='+uni.getStorageSync("index"));
+			if(option.schoolCode){
+				uni.setStorageSync("defaultSchoolCode",option.schoolCode);
+				console.log(option);
+			}
+			if(uni.getStorageSync("autoLogin")==null){
+				uni.setStorageSync("autoLogin",false);
+			}
+			uni.setStorageSync("debugLevel",this.debugLevel);
 		},
 		onLoad: function() {
 			this.$store.loginTime = this.date();
