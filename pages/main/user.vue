@@ -19,6 +19,9 @@
 			<navigator url="./user/student">
 				<icon-button src1="../../static/img/user/student_info.png" name="学籍信息"></icon-button>
 			</navigator>
+			<navigator :url="'./user/classes?classesId='+user.classesId">
+				<icon-button src1="../../static/img/user/class.png" name="班级信息"></icon-button>
+			</navigator>
 			<navigator url="./user/payment">
 				<icon-button src1="../../static/img/user/charge.png" name="缴费信息"></icon-button>
 			</navigator>
@@ -54,9 +57,9 @@
 		computed: {
 			...mapState(['hasLogin'])
 		},
-		onPullDownRefresh() {
-			this.loadJs.reloadUser(uni.getStorageSync("userInfo").resourceid);
-			this.loadJs.saveLoginTime(this.$store.loginTime,this.date());
+		async onPullDownRefresh() {
+			await this.loadJs.reloadUser(uni.getStorageSync("userInfo").resourceid);
+			await this.loadJs.saveLoginTime(this.$store.loginTime,this.date());
 			this.user = uni.getStorageSync("userInfo");
 			uni.stopPullDownRefresh();
 		},

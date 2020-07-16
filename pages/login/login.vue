@@ -1,13 +1,16 @@
 <template>
-	<view class="content">
+	<view class="content" style="background-image: url(../../static/img/login_bg.jpg);">
 		<view style="text-align: center;">
 			<image src="../../static/img/ic_logo.png" mode="widthFix" style="text-align: center;margin-top: 30px;"></image>
 		</view>
-		<view class="input-group">
+		<view class="input-group" style="margin-top: 50px;">
 			<view class="input-row border">
-				<text class="title">学校：</text>
-				<view class="uni-list-cell" style="width: 100%;">
-					<view class="uni-list-cell-db">
+				<text class="title" style="line-height: 45px;">学校：</text>
+				<view class="uni-list-cell" style="width: 100%;padding-top: 5px;">
+					<view v-if="defaultSchoolCode">
+						{{schoolName}}
+					</view>
+					<view class="uni-list-cell-db" v-else>
 						<picker @change="bindPickerChange" :value="index" :range="schoolList" range-key="schoolName">
 							<view class="uni-input">{{schoolList[index].schoolName}}</view>
 						</picker>
@@ -15,36 +18,42 @@
 				</view>
 			</view>
 		</view>
-		
 		<view class="input-group">
 			<view class="input-row border">
-				<text class="title">账号：</text>
+				<text class="title" style="line-height: 50px;">账号：</text>
 				<m-input class="m-input" type="text" clearable v-model="account" placeholder="请输入账号"></m-input>
 			</view>
 			<view class="input-row">
-				<text class="title">密码：</text>
+				<text class="title" style="line-height: 50px;">密码：</text>
 				<m-input type="password" displayable v-model="password" placeholder="请输入密码"></m-input>
 			</view>
 		</view>
-		<view class="btn-row">
-			<button type="primary" class="primary" @tap="bindLogin">登录</button>
+		<view class="input-row btn-row">
+			<button type="primary" class="primary" style="width: 40%;" @tap="bindLogin">登录</button>
+			<button @tap="visitorLogin" style="width: 40%;color: #567CA3;">访客登录</button>
 		</view>
-		<view class="action-row" v-if="schoolList[index].schoolCode === '11078' || schoolList[index].schoolCode === '11846'">
-			<navigator :url="'./pwd?baseUrl='+schoolList[index].imgUrl+'&account='+account">忘记密码</navigator>
-		</view>
-		<view class="action-row" v-else>
-			<navigator :url="'./pwd?account='+account">忘记密码</navigator>
+		<view class="action-row" style="margin-top: 10px;color: grey;font-size: 15px;">
+			<view style="width: 35%;">
+				<switch :checked="autoLogin" @change="autoLoginF" style="transform:scale(0.7)" color="#39B54A"></switch>
+				<text style="padding-top: 8px;margin-left: -8px;">自动登录</text>
+			</view>
+			<view style="width: 35%;">
+				<switch :checked="savePassword" @change="savePasswordF" style="transform:scale(0.7)" color="#39B54A"></switch>
+				<text style="padding-top: 8px;margin-left: -8px;">保存密码</text>
+			</view>
+			<view  style="padding-top: 3px;width: 30%;">
+				<navigator v-if="schoolList[index].schoolCode === '11078' || schoolList[index].schoolCode === '11846'"
+				:url="'./pwd?baseUrl='+schoolList[index].imgUrl+'&account='+account">找回密码</navigator>
+				<navigator v-else :url="'./pwd?account='+account">找回密码</navigator>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
 
-	import {
-		mapState,
-		mapMutations
-	} from 'vuex'
-	import mInput from '../../components/m-input.vue'
+	import {mapState,mapMutations} from 'vuex'
+	import mInput from '@/components/m-input.vue'
 
 	export default {
 		components: {
@@ -52,23 +61,68 @@
 		},
 		data() {
 			return {
+				savePassword: uni.getStorageSync("savePassword"),
+				autoLogin: uni.getStorageSync("autoLogin"),
 				account: uni.getStorageSync("account"),
 				password: uni.getStorageSync("password"),
 				positionTop: 0,
 				isDevtools: false,
+				schoolName:"",
+				defaultSchoolCode:uni.getStorageSync("defaultSchoolCode"),
 				index : uni.getStorageSync("index")?uni.getStorageSync("index"):0,
 				schoolList: this.schoolData
 			}
 		},
 		onLoad() {
-			if(this.$store.onLaunch=='Y' && this.account.length>0 && this.password.length>0){
+			var schoolInfo = this.schoolList[this.index];
+			this.$store.schoolCode = schoolInfo.schoolCode;
+			this.$store.imgUrl = schoolInfo.imgUrl;
+			this.$store.baseUrl = schoolInfo.baseUrl;
+			uni.setStorageSync("index",this.index);
+			uni.setStorageSync("baseUrl",schoolInfo.baseUrl);
+			uni.setStorageSync("imgUrl",schoolInfo.imgUrl);
+			if(!uni.getStorageSync("autoLogin")){
+				uni.setStorageSync("autoLogin",false);
+			}
+			if(!uni.getStorageSync("savePassword")){
+				uni.setStorageSync("savePassword",true);
+			}
+			if(!this.savePassword){
+				this.password = "";
+				uni.setStorageSync("password","");
+			}
+			if(this.autoLogin && this.$store.onLaunch=='Y' && this.account.length>0 && this.password.length>0){
 				this.bindLogin();
+			}else if(uni.getStorageSync("defaultSchoolCode")){
+				var dsc = uni.getStorageSync("defaultSchoolCode");
+				for(var i=0;i<this.schoolData.length;i++){
+					if(dsc==this.schoolData[i].schoolCode){
+						this.index = i;
+						this.schoolName = this.schoolData[i].schoolName;
+						break
+					}
+				}
 			}
 		},
 		methods: {
 			...mapMutations(['login']),
 			bindPickerChange: function(e) {
 				this.index = e.target.value
+				var schoolInfo = this.schoolList[this.index];
+				this.$store.schoolCode = schoolInfo.schoolCode;
+				this.$store.imgUrl = schoolInfo.imgUrl;
+				this.$store.baseUrl = schoolInfo.baseUrl;
+				uni.setStorageSync("index",this.index);
+				uni.setStorageSync("baseUrl",schoolInfo.baseUrl);
+				uni.setStorageSync("imgUrl",schoolInfo.imgUrl);
+			},
+			autoLoginF(e){
+				this.autoLogin = e.detail.value;
+				uni.setStorageSync("autoLogin",this.autoLogin);
+			},
+			savePasswordF(e){
+				this.savePassword = e.detail.value;
+				uni.setStorageSync("savePassword",this.savePassword);
 			},
 			initPosition() {
 				uni.getSystemInfoSync({
@@ -84,6 +138,11 @@
 				 * 反向使用 top 进行定位，可以避免此问题。
 				 */
 				this.positionTop = uni.getSystemInfoSync().windowHeight - 100;
+			},
+			visitorLogin(){
+				uni.navigateTo({
+					url: '../login/wx',
+				});
 			},
 			bindLogin() {
 				/**
@@ -110,16 +169,8 @@
 				});
 				setTimeout(function(){
 					uni.hideLoading();
-					if(!uni.getStorageSync("loginTimeOut")){
-						uni.showToast({
-							icon: 'none',
-							title: '登录超时',
-						});
-					}
-				},5000);
-				uni.setStorageSync("baseUrl",baseUrl);
+				},10000);
 				uni.setStorageSync("appMac",uni.getStorageSync("uuid")+this.account);
-				this.$store.baseUrl = baseUrl;
 				this.$http.post('/user/login', {
 					userName: this.account,
 					password: this.password,
@@ -127,7 +178,6 @@
 					appmac:uni.getStorageSync("appMac"),
 					terminalType:uni.getStorageSync("platform")
 				}).then(res => {
-					uni.setStorageSync("loginTimeOut","N");
 					let result = JSON.parse(res);
 					if(result.status==this.RESPONSE_OK){
 						uni.hideLoading();
@@ -144,15 +194,11 @@
 						});
 					}
 				});
-				
 			},
 			toMain(userInfo) {
-				this.$store.schoolCode = this.schoolList[this.index].schoolCode;
-				this.$store.imgUrl = this.schoolList[this.index].imgUrl;
-				this.$store.baseInfoId = userInfo.studentBaseId;
 				this.$store.account = this.account;
 				this.$store.loginTime = this.date();
-				uni.setStorageSync("index",this.index);
+				this.$store.baseInfoId = userInfo.studentBaseId;
 				uni.setStorageSync("account",this.account);
 				uni.setStorageSync("password",this.password);
 				uni.setStorageSync("userInfo",userInfo);

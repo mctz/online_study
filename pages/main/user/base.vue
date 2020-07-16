@@ -1,15 +1,15 @@
 <template>
 	
 	<view class="content" style="margin-bottom: 50px;">
-		<view class="input-row border" style="background-color: #567ca3;height: 300rpx; text-align: center;">
+		<view class="input-row border" style="background-color: #567ca3;height: 380rpx; text-align: center;">
 			<view style="width: 20%;font-size: small;">
-				1录取照片;<br><br>2学籍照片;
+				<br>1录取照片;<br><br>2学籍照片;
 			</view>
 			<view style="width: 40%;text-align: center;margin-top: 10rpx;">
-				<image :src="recruitPhotoPath" style="width: 90%;height: 90%;border-radius: 20%;" mode="widthFix"></image>
+				<image :src="recruitPhotoPath" style="width: 80%;height: 80%;border-radius: 20%;" mode="widthFix"></image>
 			</view>
 			<view style="width: 40%;text-align: center;margin-top: 10rpx;">
-				<image :src="photoPath" style="width: 90%;height: 90%;border-radius: 20%;" mode="widthFix"></image>
+				<image :src="photoPath" style="width: 80%;height: 80%;border-radius: 20%;" mode="widthFix"></image>
 			</view>
 		</view>
 		<view style="background-color: #FFFFFF;">
@@ -20,9 +20,9 @@
 		<uni-collapse accordion="true">
 			<uni-collapse-item title="证件照" style="font-weight: bold;text-align: center;">
 				<view class="input-row">
-					<view style="width: 80%;text-align: center;margin-top: 10rpx;">
-						<image :src="certPhotoPath" style="width: 100%;height: 100%;border-radius: 10%;" mode="widthFix"></image>
-						<wm-watermark text="仅供学校使用" opacity="1"></wm-watermark>
+					<view style="text-align: center;margin-top: 10rpx;">
+						<image :src="certPhotoPath" style="height: 100%;border-radius: 10%;" mode="widthFix"></image>
+						<wm-watermark :text="'pressText' | getDictValue('sys_file_certcard_presstext')" opacity="1"></wm-watermark>
 					</view>
 				</view>
 			</uni-collapse-item>
@@ -33,7 +33,7 @@
 				<line-text ltext="性别" :rtext="baseInfo.gender | getDictName(this.CODE_SEX)"></line-text>
 				<line-text ltext="证件类型" :rtext="baseInfo.certType | getDictName(this.CODE_CERTTYPE)"></line-text>
 				<line-text ltext="证件号码" :rtext="baseInfo.certNum"></line-text>
-				<line-text ltext="联系地址" :rtext="baseInfo.contactAddress"></line-text>
+				<line-text ltext="联系地址" :rtext="baseInfo.contactAddress + baseInfo.contactAddress"></line-text>
 				<line-text ltext="联系邮编" :rtext="baseInfo.contactZipcode"></line-text>
 				<line-text ltext="联系方式" :rtext="baseInfo.contactPhone+'  /  '+baseInfo.mobile"></line-text>
 				<line-text ltext="邮箱地址" :rtext="baseInfo.email"></line-text>
@@ -67,9 +67,9 @@
 
 
 <script>
-	import lineText from '../../../components/line-text.vue'
-	import iconButton from '../../../components/icon-button.vue'
-	import wmWatermark from '../../../components/wm-watermark/wm-watermark.vue'
+	import lineText from '@/components/line-text.vue'
+	import iconButton from '@/components/icon-button.vue'
+	import wmWatermark from '@/components/wm-watermark/wm-watermark.vue'
 	export default {
 		components:{
 			lineText,iconButton,wmWatermark
@@ -84,8 +84,8 @@
 				baseInfo:uni.getStorageSync("baseInfo")
 			}
 		},
-		onPullDownRefresh() {
-			this.loadJs.reloadBaseInfo(this.$store.baseInfoId);
+		async onPullDownRefresh() {
+			await this.loadJs.reloadBaseInfo(this.$store.baseInfoId);
 			this.baseInfo = uni.getStorageSync("baseInfo");
 			uni.stopPullDownRefresh();
 		},

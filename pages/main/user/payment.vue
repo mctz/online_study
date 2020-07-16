@@ -37,7 +37,7 @@
 
 
 <script>
-	import lineText from '../../../components/line-text.vue'
+	import lineText from '@/components/line-text.vue'
 	import uniCollapse from '@/components/uni-collapse/uni-collapse.vue'
 	import uniCollapseItem from '@/components/uni-collapse-item/uni-collapse-item.vue'
 	export default {
@@ -50,8 +50,8 @@
 				paymentDetail:uni.getStorageSync("studentPaymentDetail")
 			}
 		},
-		onPullDownRefresh() {
-			this.loadJs.reloadPayment(this.$store.baseInfoId);
+		async onPullDownRefresh() {
+			await this.loadJs.reloadPayment(this.$store.baseInfoId);
 			this.payment = uni.getStorageSync("studentPayment");
 			this.paymentDetail = uni.getStorageSync("studentPaymentDetail");
 			uni.stopPullDownRefresh();

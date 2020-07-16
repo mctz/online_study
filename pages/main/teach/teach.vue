@@ -39,7 +39,7 @@
 
 
 <script>
-	import lineText from '../../../components/line-text.vue'
+	import lineText from '@/components/line-text.vue'
 	export default {
 		components:{
 			lineText

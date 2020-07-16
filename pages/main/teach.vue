@@ -10,6 +10,9 @@
 			<navigator url="./teach/score">
 				<icon-button src1="../../static/img/teach/score.png" name="考试成绩"></icon-button>
 			</navigator>
+			<navigator url="./teach/timetable">
+				<icon-button src1="../../static/img/teach/timetable.png" name="查看课表"></icon-button>
+			</navigator>
 			<navigator url="./teach/change">
 				<icon-button src1="../../static/img/teach/change.png" name="学籍异动"></icon-button>
 			</navigator>

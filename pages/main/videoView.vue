@@ -32,7 +32,8 @@
 	                    time: 1
 	                }
 	            ],
-	            danmuValue: ''
+	            danmuValue: '',
+				imgUrl:this.$store.imgUrl,
 	        }
 	    },
 	     onReady() {
@@ -43,7 +44,11 @@
 			this.videoContext.requestFullScreen();
 	    },
 		async onLoad(option) {
-			this.webUrl = option.webUrl;
+			var url = option.webUrl;
+			if(!url.startsWith("http")){
+				url = this.imgUrl + url;
+			}
+			this.webUrl = url;
 			this.courseId = option.courseId;
 			this.mateId = option.mateId;
 			this.totalTime = option.totalTime;
@@ -80,15 +85,15 @@
 			ended: function(event){
 				this.loadJs.saveStudyProgress(this.learnTime,this.totalTime,this.currentTime,this.$store.baseInfoId,this.courseId,this.mateId)
 			},
-			onBackPress() {
-				this.loadJs.saveStudyProgress(this.learnTime,this.totalTime,this.currentTime,this.$store.baseInfoId,this.courseId,this.mateId)
+			async onBackPress() {
+				await this.loadJs.saveStudyProgress(this.learnTime,this.totalTime,this.currentTime,this.$store.baseInfoId,this.courseId,this.mateId)
 				console.log("onBackPress:"+this.learnTime+";"+this.currentTime);
 			},
 			timeupdate(event){
 				let detail = event.detail;
 				this.currentTime = detail.currentTime;
 				this.learnTime += 0.25;
-				console.log(this.currentTime);
+				//console.log(this.currentTime);
 			}
 	    }
 	}

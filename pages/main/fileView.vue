@@ -1,21 +1,33 @@
 
 <template>
-	<me-preview-word :docUrl="webUrl"></me-preview-word>
+	<web-view :src="webUrl"></web-view>
 </template>
 
 <script>
-	import mePreviewWord from '@/components/me-preview-word/me-preview-word'
 	export default {
-		components: {
-		    mePreviewWord
-		},
 		data() {
 			return {
-				webUrl:"https://wwe.lanzous.com/ia3gula"
+				isPdf:true,
+				imgUrl:this.$store.imgUrl,
+				webUrl:""
 			}
 		},
 		onLoad(option) {
-			this.webUrl = option.webUrl;
+			var fileUrl = option.webUrl;
+			if(!fileUrl.startsWith("http")){
+				fileUrl = this.imgUrl + fileUrl;
+			}
+			if(fileUrl.endsWith("pdf") || fileUrl.endsWith("PDF")){
+				//浏览本地的pdf文件
+				//this.webUrl = '/hybrid/html/web/viewer.html?file='+option.webUrl
+				//浏览在线的pdf文件
+				this.webUrl = '/hybrid/html/web/viewer.html?file='+encodeURIComponent(fileUrl);
+			}else{
+				this.isPdf = false;
+				//var docUrl = "http://view.xdocin.com/xdoc?_xdoc=";
+				var docUrl = "https://view.officeapps.live.com/op/view.aspx?src=";
+				this.webUrl = docUrl+fileUrl;
+			}
 		},
 	}
 </script>

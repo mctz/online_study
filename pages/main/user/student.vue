@@ -83,7 +83,7 @@
 
 
 <script>
-	import lineText from '../../../components/line-text.vue'
+	import lineText from '@/components/line-text.vue'
 	export default {
 		components:{
 			lineText
@@ -97,8 +97,8 @@
 				studentInfo:uni.getStorageSync("studentInfo")
 			}
 		},
-		onPullDownRefresh() {
-			this.loadJs.reloadStudentInfo(this.$store.account,this.$store.baseInfoId);
+		async onPullDownRefresh() {
+			await this.loadJs.reloadStudentInfo(this.$store.account,this.$store.baseInfoId);
 			this.stuResume = uni.getStorageSync("stuResume");
 			this.stuRelation = uni.getStorageSync("stuRelation");
 			this.studentInfo = uni.getStorageSync("studentInfo");
