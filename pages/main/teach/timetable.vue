@@ -1,6 +1,6 @@
 <template>
 	<view class="content" style="margin-bottom: 50px;">
-		<view class="input-row" style="color:#2c3a4d;line-height: 25px;font-size: 16px;background-color:#B2B2B2;">
+		<view class="input-row" style="color:#2c3a4d;line-height: 25px;font-size: 16px;background-color:#B2B2B2;color: #00557f;">
 			<text style="width: 20%;">时间<br>/星期</text>
 			<text style="width: 25%;padding-top: 10px;">上午</text>
 			<text style="width: 25%;padding-top: 10px;">下午</text>
@@ -15,8 +15,8 @@
 				<text style="width: 25%;color: #153ba3;" @click="showContent(timetable[index+2].content)">{{timetable[index+2].title}}</text>
 			</view>
 		</view>
-		<uni-popup ref="popup" type="center">
-		    <uni-popup-message type="warn" :message="content" :duration="5000"></uni-popup-message>
+		<uni-popup ref="popup" type="bottom">
+		    <uni-popup-message type="error" :message="content" :duration="5000"></uni-popup-message>
 		</uni-popup>
 	</view>
 </template> 

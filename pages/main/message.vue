@@ -39,15 +39,15 @@
 			<view v-else style="margin-top: 2px;" v-for="(item, i) in courseNotice" v-bind:key="i">
 				<uni-collapse accordion="true">
 					<uni-collapse-item :name="i" :title="item.yearName + '  ' + item.noticeTitle" style="text-align: left;">
-						<view style="margin-left: 10px;margin-right: 5px;font-weight: normal;">
+						<view style="margin-left: 5px;margin-right: 5px;font-weight: normal;">
 							<view style="color:#000000;background-color:#73b6d2;">
 								<view class="input-row">
-									<text style="font-size: 15px;width: 30%;">学期：{{item.term}}</text>
-									<text style="font-size: 15px;width: 70%;">课程名称：{{item.courseName}}</text>
+									<text style="font-size: 15px;width: 40%;color:#444444">{{item.fillinMan}}</text>
+									<text style="font-size: 15px;width: 60%;color:#444444">{{item.fillinDate | formatDateTime}}</text>
 								</view>
 								<view class="input-row">
-									<text style="font-size: 15px;width: 50%;">{{item.fillinMan}}</text>
-									<text style="font-size: 15px;width: 50%;">{{item.fillinDate | formatDateTime}}</text>
+									<text style="font-size: 15px;width: 40%;">学期：{{item.term}}</text>
+									<text style="font-size: 15px;width: 60%;">课程名称：{{item.courseName}}</text>
 								</view>
 							</view>
 							<view style="color: #000000;background-color: #b8deef;font-size: 15px;">
@@ -56,7 +56,7 @@
 							</view>
 							<view v-for="(k, j) in item.attachs" v-bind:key="j" style="background-color: #d8e9eb;line-height: 30px;font-size: 14px;">
 								<navigator open-type="navigate"  :url="'./fileView?webUrl='+item.attachs[j].storePath">
-									附件{{j+1}}: {{item.attachs[j].attName}}
+									<text style="color: #195521;">附件{{j+1}}: {{item.attachs[j].attName}}</text>
 								</navigator>
 							</view>
 						</view>

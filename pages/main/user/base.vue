@@ -14,7 +14,7 @@
 		</view>
 		<view style="background-color: #FFFFFF;">
 			<navigator url="./enroll" open-type="navigate">
-				<icon-button src1="../../../static/img/user/enroll.png" name="查看录取通知书"></icon-button>
+				<icon-button :src1="iconUrl+'user/enroll.png'" name="查看录取通知书"></icon-button>
 			</navigator>
 		</view>
 		<uni-collapse accordion="true">
@@ -29,7 +29,7 @@
 		</uni-collapse>
 		<uni-collapse accordion="true">
 			<uni-collapse-item showAnimation="true" open="true" title="基本信息" style="font-weight: bold;text-align: center;">
-				<line-text ltext="姓名" :rtext="baseInfo.name"></line-text>
+				<line-text id="name" ltext="姓名" :rtext="baseInfo.name" ></line-text>
 				<line-text ltext="性别" :rtext="baseInfo.gender | getDictName(this.CODE_SEX)"></line-text>
 				<line-text ltext="证件类型" :rtext="baseInfo.certType | getDictName(this.CODE_CERTTYPE)"></line-text>
 				<line-text ltext="证件号码" :rtext="baseInfo.certNum"></line-text>
@@ -62,6 +62,9 @@
 				<line-text ltext="备注" :rtext="baseInfo.memo"></line-text>
 			</uni-collapse-item>
 		</uni-collapse>
+		<uni-popup ref="dialogInput" type="dialog">
+			<uni-popup-dialog mode="input" value="" placeholder="请输入修改后内容" @confirm="confirm"></uni-popup-dialog>
+		</uni-popup>
 	</view>
 </template> 
 
@@ -77,10 +80,11 @@
 		data() {
 			return {
 				baseUrl:this.$store.baseUrl,
-				photoPath:"../../../static/img/user/headphoto.png",
-				recruitPhotoPath:"../../../static/img/user/headphoto.png",
-				certPhotoPath:"../../../static/img/user/certPhoto.png",
-				certPhotoPathReverse:"../../../static/img/user/certPhotoReverse.png",
+				iconUrl:this.iconUrl,
+				photoPath:this.iconUrl+"user/headphoto.png",
+				recruitPhotoPath:this.iconUrl+"user/headphoto.png",
+				certPhotoPath:this.iconUrl+"user/certPhoto.png",
+				certPhotoPathReverse:this.iconUrl+"user/certPhotoReverse.png",
 				baseInfo:uni.getStorageSync("baseInfo")
 			}
 		},
@@ -108,6 +112,15 @@
 				this.certPhotoPathReverse = this.$store.imgUrl+this.ATTACHS_STU+this.baseInfo.certPhotoPathReverse;
 			}
 		},
+		methods:{
+			open(){
+				this.$refs.dialogInput.open();
+			},
+			confirm(done,value){
+				console.log(value)
+				done()
+			},
+		}
 	}
 </script>
 

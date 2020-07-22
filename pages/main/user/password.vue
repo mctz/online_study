@@ -76,15 +76,10 @@
 						setTimeout(function(){
 							uni.navigateBack({});
 						},1000);
-					}else if(result.status==this.RESPONSE_ERROR){
-						uni.showToast({
-							icon: 'none',
-							title: result.msg,
-						});
 					}else {
 						uni.showToast({
 							icon: 'none',
-							title: '修改失败',
+							title: result.msg,
 						});
 					}
 				})

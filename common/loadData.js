@@ -48,6 +48,15 @@ async function readMessage(cardId,receiveId){
 	});
 };
 
+async function saveBarrage(userid,mateid,sendTime,content){
+	await http.post('/online/saveBarrage', {
+		userid:userid,
+		mateid:mateid,
+		sendTime:sendTime,
+		content:content
+	});
+};
+
 /**
  * @param {Object} type:section,topic
  * @param {Object} resourceid:sectionId,topicId
@@ -147,28 +156,30 @@ async function reloadPayment(studentBaseId){
 };
 
 async function reloadDict(value,parentCode){
-	uni.showLoading({});
-	await http.get('/data/getDictionaryByCode/'+parentCode+'/'+value, {
-	}).then(res => {
-		let dict = JSON.parse(JSON.parse(res).data);
-		if(dict){
-			uni.setStorageSync("dict_"+parentCode+'_'+value,dict.dictName);
-		}
-	});
-	uni.hideLoading();
+	if(value!=null && value!=undefined && value!=""){
+		await http.get('/data/getDictionaryByCode/'+parentCode+'/'+value, {
+		}).then(res => {
+			var data = JSON.parse(res).data;
+			if(data){
+				let dict = JSON.parse(data);
+				uni.setStorageSync("dict_"+parentCode+'_'+value,dict.dictName);
+			}
+		});
+	}
 };
 
 async function reloadDict2(name,parentCode){
-	uni.showLoading({});
-	await http.get('/data/getDictionaryByCode/'+parentCode+'/'+name, {
-		isByName:"Y"
-	}).then(res => {
-		let dict = JSON.parse(JSON.parse(res).data);
-		if(dict){
-			uni.setStorageSync("dict_"+parentCode+'_'+name,dict.dictValue);
-		}
-	});
-	uni.hideLoading();
+	if(name!=null && name!=undefined && name!=""){
+		await http.get('/data/getDictionaryByCode/'+parentCode+'/'+name, {
+			isByName:"Y"
+		}).then(res => {
+			var data = JSON.parse(res).data;
+			if(data){
+				let dict = JSON.parse(data);
+				uni.setStorageSync("dict_"+parentCode+'_'+name,dict.dictValue);
+			}
+		});
+	}
 };
 
 async function reloadConfig(paramCode){
@@ -230,29 +241,39 @@ async function reloadTimetable(studentBaseId,term){
 			obj.content = "";
 			timeArray[index] = obj;
 		}
-		for(var index=0;index<timetable.length;index++){
-			if(onlineCourse.indexOf(timetable[index].course)>=0){
-				continue;
-			}
-			var weeks = timetable[index].week;
-			var time = (timetable[index].timePeriod/10)-1;
-			if(weeks.indexOf(",")>0){
-				var weekArray = weeks.split(",");
-				for(var i=0;i<weekArray.length;i++){
-					var week = weekArray[i]-1;
-					timeArray[week*4+time].title += timetable[index].courseName + ";";
-					timeArray[week*4+time].content += "时间：" + timetable[index].courseTimeName + "\n" 
-						+ "课室："+timetable[index].classroomName +"\n"+ "授课教师："+timetable[index].teacherName + "\n\n";
+		if(timetable!=null && timetable.length>0){
+			for(var index=0;index<timetable.length;index++){
+				if(onlineCourse.indexOf(timetable[index].course)>=0){
+					continue;
 				}
-			}else if(weeks==null || weeks===""){
-				timeArray[time].title += timetable[index].courseName + ";";
-				timeArray[week*4+time].content += "时间：" + timetable[index].courseTimeName + "\n"
-					+ "课室："+timetable[index].classroomName +"\n"+ "授课教师："+timetable[index].teacherName + "\n\n";
-			}else {
-				var week = weeks-1;
-				timeArray[week*4+time].title += timetable[index].courseName + ";";
-				timeArray[week*4+time].content += "时间：" + timetable[index].courseTimeName + "\n"
-					+ "课室："+timetable[index].classroomName +"\n"+ "授课教师："+timetable[index].teacherName + "\n\n";
+				var weeks = timetable[index].week;
+				var time = (timetable[index].timePeriod/10)-1;
+				if(weeks.indexOf(",")>0){
+					var weekArray = weeks.split(",");
+					for(var i=0;i<weekArray.length;i++){
+						var week = weekArray[i]-1;
+						var timeStr = timetable[index].courseTimeName==null?"":timetable[index].courseTimeName;
+						var roomStr = timetable[index].classroomName==null?"":timetable[index].classroomName;
+						var teacherStr = timetable[index].teacherName==null?"":timetable[index].teacherName;
+						timeArray[week*4+time].title += timetable[index].courseName + "; ";
+						timeArray[week*4+time].content += "时间：" + timeStr + "\n" 
+							+ "课室："+ roomStr +"\n"+ "授课教师："+ teacherStr + "\n\n";
+					}
+				}else {
+					var timeStr = timetable[index].courseTimeName==null?"":timetable[index].courseTimeName;
+					var roomStr = timetable[index].classroomName==null?"":timetable[index].classroomName;
+					var teacherStr = timetable[index].teacherName==null?"":timetable[index].teacherName;
+					if(weeks==null || weeks===""){
+						timeArray[time].title += timetable[index].courseName + "; ";
+						timeArray[time].content +="时间：" + timeStr + "\n" 
+							+ "课室："+ roomStr +"\n"+ "授课教师："+ teacherStr + "\n\n";
+					}else {
+						var week = weeks-1;
+						timeArray[week*4+time].title += timetable[index].courseName + "; ";
+						timeArray[week*4+time].content += "时间：" + timeStr + "\n" 
+							+ "课室："+ roomStr +"\n"+ "授课教师："+ teacherStr + "\n\n";
+					}
+				}
 			}
 		}
 		uni.setStorageSync("timetable",timeArray);
@@ -395,11 +416,22 @@ async function reloadBbsReply(topicId,pageSize,pageNum){
 	uni.hideLoading();
 }
 
+async function reloadBarrage(syllabus){
+	uni.showLoading({});
+	await http.get('/online/barrage', {
+		syllabus:syllabus
+	}).then(res => {
+		let barrageInfo = JSON.parse(JSON.parse(res).list);
+		uni.setStorageSync("barrageInfo_"+syllabus,barrageInfo);
+	});
+	uni.hideLoading();
+};
 
 export default {
 	saveLoginTime,
 	saveStudyProgress,
 	readMessage,
+	saveBarrage,
 	clickTopic,
 	reloadUser,
 	reloadBaseInfo,
@@ -419,6 +451,7 @@ export default {
 	reloadExerciseBatch,
 	reloadBbsSection,
 	reloadBbsReply,
+	reloadBarrage,
 	reloadTopics,
 	reloadDict,
 	reloadDict2,

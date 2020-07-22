@@ -13,9 +13,9 @@
 			<view class="input-row" style="color: grey;line-height: 20px;margin-top: 10px;font-size: small;">
 				<text style="width: 50%;">{{pc.courseName}}</text>
 				<text style="width: 15%;">{{pc.creditHour}}</text>
-				<template v-for="(er,j) in examResult" v-if="er.courseid==pc.courseid" >
-					<text style="width: 15%;">{{er.normalScore}}</text>
-					<text style="width: 15%;">{{er.makeupScore}}</text>
+				<template v-for="(er,j) in examResult" v-if="er.courseId==pc.course" >
+					<text style="width: 15%;">{{er.normalScore==null?"":er.normalScore}}</text>
+					<text style="width: 15%;">{{er.makeupScore==null?"":er.makeupScore}}</text>
 				</template>
 			</view>
 		</view>

@@ -1,5 +1,5 @@
 {
-    "name" : "广东学苑",
+    "name" : "学苑教育",
     "appid" : "__UNI__50AFCD1",
     "description" : "",
     "versionName" : "2.0.0",
@@ -21,7 +21,6 @@
             "VideoPlayer" : {},
             "OAuth" : {},
             "Payment" : {},
-            "SQLite" : {},
             "Push" : {}
         },
         /* 应用发布信息 */
@@ -31,25 +30,36 @@
                 "permissions" : [
                     "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
                     "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
                     "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
                     "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\"/>",
                     "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
                     "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
-                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>"
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>"
                 ],
-                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ]
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ],
+                "minSdkVersion" : 22,
+                "targetSdkVersion" : 27
             },
             /* ios打包配置 */
             "ios" : {},
             /* SDK配置 */
             "sdkConfigs" : {
                 "ad" : {},
-                "oauth" : {},
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "wx36f1df51d5eb5280",
+                        "appsecret" : "",
+                        "UniversalLinks" : ""
+                    }
+                },
                 "payment" : {},
                 "push" : {}
             },
@@ -84,6 +94,9 @@
                         "spotlight@3x" : "unpackage/res/icons/120x120.png"
                     }
                 }
+            },
+            "splashscreen" : {
+                "androidStyle" : "common"
             }
         },
         "uniStatistics" : {
@@ -94,31 +107,32 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wx36f1df51d5eb5280",
         "setting" : {
             "urlCheck" : false
         },
         "usingComponents" : true,
         "uniStatistics" : {
             "enable" : true
-        }
+        },
+        "permission" : {}
     },
     "mp-alipay" : {
         "usingComponents" : true,
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
         }
     },
     "mp-baidu" : {
         "usingComponents" : true,
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
         }
     },
     "mp-toutiao" : {
         "usingComponents" : true,
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
         }
     },
     "h5" : {
@@ -128,15 +142,15 @@
             "enable" : true
         },
         "router" : {
-            "mode" : "hash"
+            "mode" : "history"
         }
     },
     "uniStatistics" : {
-        "enable" : true
+        "enable" : false
     },
     "mp-qq" : {
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
         }
     }
 }

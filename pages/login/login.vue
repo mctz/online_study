@@ -1,16 +1,13 @@
 <template>
-	<view class="content" style="background-image: url(../../static/img/login_bg.jpg);">
+	<view class="content login" :style="{backgroundImage: 'url('+iconUrl+'login_bg.jpg)'}">
 		<view style="text-align: center;">
-			<image src="../../static/img/ic_logo.png" mode="widthFix" style="text-align: center;margin-top: 30px;"></image>
+			<image :src="iconUrl+'ic_logo.jpg'" mode="widthFix" style="text-align: center;margin-top: 20%;"></image>
 		</view>
-		<view class="input-group" style="margin-top: 50px;">
+		<view class="input-group" style="margin-top: 15%;">
 			<view class="input-row border">
 				<text class="title" style="line-height: 45px;">学校：</text>
 				<view class="uni-list-cell" style="width: 100%;padding-top: 5px;">
-					<view v-if="defaultSchoolCode">
-						{{schoolName}}
-					</view>
-					<view class="uni-list-cell-db" v-else>
+					<view class="uni-list-cell-db">
 						<picker @change="bindPickerChange" :value="index" :range="schoolList" range-key="schoolName">
 							<view class="uni-input">{{schoolList[index].schoolName}}</view>
 						</picker>
@@ -56,9 +53,7 @@
 	import mInput from '@/components/m-input.vue'
 
 	export default {
-		components: {
-			mInput
-		},
+		components: {mInput},
 		data() {
 			return {
 				savePassword: uni.getStorageSync("savePassword"),
@@ -68,14 +63,19 @@
 				positionTop: 0,
 				isDevtools: false,
 				schoolName:"",
-				defaultSchoolCode:uni.getStorageSync("defaultSchoolCode"),
+				iconUrl:this.iconUrl,
 				index : uni.getStorageSync("index")?uni.getStorageSync("index"):0,
 				schoolList: this.schoolData
 			}
 		},
 		onLoad() {
+			if(this.debugLevel>1){
+				console.log("onLoad",this.autoLogin);
+			}
+			this.index = uni.getStorageSync("index")?uni.getStorageSync("index"):0;
 			var schoolInfo = this.schoolList[this.index];
 			this.$store.schoolCode = schoolInfo.schoolCode;
+			this.$store.schoolName = schoolInfo.schoolName;
 			this.$store.imgUrl = schoolInfo.imgUrl;
 			this.$store.baseUrl = schoolInfo.baseUrl;
 			uni.setStorageSync("index",this.index);
@@ -93,16 +93,8 @@
 			}
 			if(this.autoLogin && this.$store.onLaunch=='Y' && this.account.length>0 && this.password.length>0){
 				this.bindLogin();
-			}else if(uni.getStorageSync("defaultSchoolCode")){
-				var dsc = uni.getStorageSync("defaultSchoolCode");
-				for(var i=0;i<this.schoolData.length;i++){
-					if(dsc==this.schoolData[i].schoolCode){
-						this.index = i;
-						this.schoolName = this.schoolData[i].schoolName;
-						break
-					}
-				}
 			}
+			this.$store.onLaunch='N';
 		},
 		methods: {
 			...mapMutations(['login']),
@@ -110,11 +102,13 @@
 				this.index = e.target.value
 				var schoolInfo = this.schoolList[this.index];
 				this.$store.schoolCode = schoolInfo.schoolCode;
+				this.$store.schoolName = schoolInfo.schoolName;
 				this.$store.imgUrl = schoolInfo.imgUrl;
 				this.$store.baseUrl = schoolInfo.baseUrl;
 				uni.setStorageSync("index",this.index);
 				uni.setStorageSync("baseUrl",schoolInfo.baseUrl);
 				uni.setStorageSync("imgUrl",schoolInfo.imgUrl);
+				console.log(this.index,schoolInfo.baseUrl);
 			},
 			autoLoginF(e){
 				this.autoLogin = e.detail.value;
@@ -144,12 +138,11 @@
 					url: '../login/wx',
 				});
 			},
-			bindLogin() {
-				/**
-				 * 客户端对账号信息进行一些必要的校验。
-				 */
-				var baseUrl = this.schoolList[this.index].baseUrl;
-				
+			async bindLogin() {
+				//var baseUrl = this.schoolList[this.index].baseUrl;
+				if(this.debugLevel>0){
+					console.log(this.index,uni.getStorageSync("index"),uni.getStorageSync("baseUrl"));
+				}
 				if (this.account.length == 0) {
 					uni.showToast({
 						icon: 'none',
@@ -171,7 +164,7 @@
 					uni.hideLoading();
 				},10000);
 				uni.setStorageSync("appMac",uni.getStorageSync("uuid")+this.account);
-				this.$http.post('/user/login', {
+				await this.$http.post('/user/login', {
 					userName: this.account,
 					password: this.password,
 					operate:"login",
@@ -179,18 +172,14 @@
 					terminalType:uni.getStorageSync("platform")
 				}).then(res => {
 					let result = JSON.parse(res);
-					if(result.status==this.RESPONSE_OK){
+					if(result.status===this.RESPONSE_OK){
 						uni.hideLoading();
 						this.toMain(JSON.parse(result.data));
-					}else if(result.status==this.RESPONSE_ERROR){
+					}else {
+						uni.hideLoading();
 						uni.showToast({
 							icon:"none",
 							title: result.msg,
-						});
-					}else {
-						uni.showToast({
-							icon:"none",
-							title: '登录失败，用户名或密码错误',
 						});
 					}
 				});
@@ -199,6 +188,7 @@
 				this.$store.account = this.account;
 				this.$store.loginTime = this.date();
 				this.$store.baseInfoId = userInfo.studentBaseId;
+				this.$store.userId = userInfo.resourceid;
 				uni.setStorageSync("account",this.account);
 				uni.setStorageSync("password",this.password);
 				uni.setStorageSync("userInfo",userInfo);
@@ -262,5 +252,8 @@
 		width: 100%;
 		height: 100%;
 		opacity: 0;
+	}
+	.login {
+		background-size: 100% 100%;
 	}
 </style>

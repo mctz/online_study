@@ -1,12 +1,8 @@
 <script>
 	export default {
-		onLaunch: function(option) {
+		onLaunch: function() {
 			this.$store.loginTime = this.date();
 			this.$store.onLaunch = 'Y';
-			if(option.schoolCode){
-				uni.setStorageSync("defaultSchoolCode",option.schoolCode);
-				console.log(option);
-			}
 			if(uni.getStorageSync("autoLogin")==null){
 				uni.setStorageSync("autoLogin",false);
 			}
@@ -28,6 +24,10 @@
 				this.$store.loginTime = this.date();
 			}
 			console.log('App Hide');
+		},
+		onUnload() {
+			this.loadJs.saveLoginTime(this.$store.loginTime,this.date());
+			console.log('App onUnload');
 		},
 		destroyed() {
 			this.loadJs.saveLoginTime(this.$store.loginTime,this.date());

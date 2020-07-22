@@ -4,7 +4,7 @@
 	</view>
 	<view v-else style="width: 100%;margin-bottom: 100px;">
 		<view v-for="(item, i) in topicsInfo.content" :key="i">
-			<uni-card :title="item.title" 
+			<uni-card :title="item.title" style="color: #00557f;"
 				v-show="!(aboutMe && item.fillinManId!=userId)" :is-shadow="true" note="note">
 			   <view class="input-row" style="background-color: #f1f1f1;color: grey;line-height: 25px;">
 					<text style="font-size: 15px;width: 30%;">{{item.fillinDate | formatDate}}</text>
@@ -27,20 +27,27 @@
 			</uni-card>
 		</view>
 		<view id="foot-box" class="cu-bar tabbar bg-white shadow foot">
-			<!-- <view style="width: 25%;">
-				<uni-combox label="每页" :candidates="pageSizeOption" v-model="pageSize"></uni-combox>
-			</view> -->
-			<uni-pagination style="width: 130px;" showIcon="true" :total="topicsInfo.totalElements" :current="pageNum+1" :pageSize="pageSize" @change="move"></uni-pagination>
+			<!-- <uni-pagination style="width: 130px;" showIcon="true" :total="topicsInfo.totalElements" :current="pageNum+1" :pageSize="pageSize" @change="move"></uni-pagination> -->
+			<view class="input-row" style="color: #567CA3;font-size: 14px;">
+				<view style="background-color: #F4F5F6;" @click="move(-1)">上一页</view>
+				<view style="margin-left: 15px;background-color: #F4F5F6;"  @click="move(1)">下一页</view>
+			</view>
 			<view class="action" @click="aboutMeF" style="letter-spacing: 1px;">
 				<view class="cuIcon-cu-image">
-					<image src="../../../static/img/button/eyes.png" ></image>
+					<image :src="iconUrl+'button/eyes.png'" ></image>
 				</view>
 				<text v-if="aboutMe" style="color: #0081FF;background-color: #e9f3ef;">与我相关</text>
-				<text v-else>与我相关</text>
+				<text v-else style="color: #567CA3;">与我相关</text>
 			</view>
-			<view class="action" style="font-size: 12px;line-height: 20px;">
-				<text>第{{pageNum+1}}页 / 共{{topicsInfo.totalPages}}页</text>
-				<br>每页{{pageSize}}，共{{topicsInfo.totalElements}}条
+			<view v-if="sectionCode=='online_interlocution'" @click="question" style="width: 40px;line-height: 15px;padding-top: 3px;text-align: left;">
+				<view class="cuIcon-cu-image" style="margin-left: 2px;">
+					<image :src="iconUrl+'button/add.png'" mode="widthFix" style="width: 50%;"></image>
+				</view>
+				<text style="font-size: 12px;letter-spacing: 2px;color: #567CA3;">提问</text>
+			</view>
+			<view class="action" style="font-size: 12px;line-height: 20px;width: 30%;">
+				第<text style="color: #730000;">{{pageNum+1}}</text>页/共<text style="color: #730000;">{{topicsInfo.totalPages}}</text>页
+				<br>每页<text style="color: #730000;">{{pageSize}}</text>条记录
 			</view>
 		</view>
 		<uni-popup ref="dialogInput" type="dialog">
@@ -66,12 +73,14 @@
 				userId:uni.getStorageSync("userInfo").resourceid,
 				pageSize:10,
 				pageNum:0,
+				sectionCode:"",
 				sectionName:"",
 				sectionId:"",
 				courseId:"",
 				aboutMe:false,
 				pageSizeOption:['10','20','50','100'],
 				imgUrl:this.$store.imgUrl,
+				iconUrl:this.iconUrl,
 				topicsInfo:uni.getStorageSync("topics_"+this.pageNum+'_'+this.sectionId+"_"+this.courseId),
 			}
 		},
@@ -83,7 +92,6 @@
 			uni.setNavigationBarTitle({
 				title:this.sectionName,
 			});
-			console.log("onLoad -> clickTopic")
 			this.loadJs.clickTopic('section',this.sectionId);
 		},
 		async onPullDownRefresh() {
@@ -97,28 +105,41 @@
 		},
 		async onReady() {
 			var _userId = "";
-			if(this.aboutMe){
+			if(this.aboutMe==true){
 				_userId = this.userId;
 			}
 			if(!uni.getStorageSync("topics_"+this.pageNum+'_'+this.sectionId+"_"+this.courseId+"_"+_userId)){
 				await this.loadJs.reloadTopics(this.sectionId,this.courseId,this.$store.baseInfoId,_userId,this.pageSize,this.pageNum);
 			}
 			this.topicsInfo = uni.getStorageSync("topics_"+this.pageNum+'_'+this.sectionId+"_"+this.courseId+"_"+_userId);
+			console.log("onReady:hideKeyboard");
+			for(var i=1;i<=10;i++){
+				setTimeout(function(){uni.hideKeyboard();},120*i);
+			}
 		},
 		methods: {
 			async move(e){
-				this.pageNum = e.current-1;
-				if(!uni.getStorageSync("topics_"+this.pageNum+'_'+this.sectionId+"_"+this.courseId)){
-					await this.loadJs.reloadTopics(this.sectionId,this.courseId,this.$store.baseInfoId,'',this.pageSize,this.pageNum);
+				if (e === -1 && this.pageNum != 0) {
+					this.pageNum -= 1;
 				}
-				this.topicsInfo = uni.getStorageSync("topics_"+this.pageNum+'_'+this.sectionId+"_"+this.courseId);
+				if (e === 1 && this.pageNum < this.topicsInfo.totalPages) {
+					this.pageNum += 1;
+				}
+				var _userId = "";
+				if(this.aboutMe){
+					_userId = this.userId;
+				}
+				if(!uni.getStorageSync("topics_"+this.pageNum+'_'+this.sectionId+"_"+this.courseId+"_"+_userId)){
+					await this.loadJs.reloadTopics(this.sectionId,this.courseId,this.$store.baseInfoId,_userId,this.pageSize,this.pageNum);
+				}
+				this.topicsInfo = uni.getStorageSync("topics_"+this.pageNum+'_'+this.sectionId+"_"+this.courseId+"_"+_userId);
 			},
 			open(){
 				this.$refs.dialogInput.open();
 			},
 			confirm(done,value){
-				console.log(value)
-				done()
+				console.log(value);
+				done();
 			},
 			async aboutMeF(){
 				uni.showLoading({
@@ -134,6 +155,11 @@
 				}
 				this.topicsInfo = uni.getStorageSync("topics_"+this.pageNum+'_'+this.sectionId+"_"+this.courseId+"_"+_userId);
 				uni.hideLoading();
+			},
+			question(){
+				uni.navigateTo({
+					url:"./question?courseId="+this.courseId+"&sectionId="+this.sectionId,
+				})
 			}
 		}
 	}

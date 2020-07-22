@@ -2,13 +2,14 @@
   "pages": [
     "pages/login/login",
     "pages/login/pwd",
+    "pages/login/wx",
     "pages/main/study",
     "pages/main/message",
     "pages/main/teach",
     "pages/main/user",
-    "pages/main/study/course",
     "pages/main/user/base",
     "pages/main/user/student",
+    "pages/main/user/classes",
     "pages/main/user/payment",
     "pages/main/user/password",
     "pages/main/user/settings",
@@ -19,8 +20,17 @@
     "pages/main/teach/time",
     "pages/main/teach/score",
     "pages/main/teach/change",
+    "pages/main/teach/timetable",
+    "pages/main/study/course",
+    "pages/main/study/exam",
+    "pages/main/study/topic",
+    "pages/main/study/question",
+    "pages/main/study/reply",
+    "pages/main/study/exercise",
     "pages/main/webView",
-    "pages/main/fileView"
+    "pages/main/iframe",
+    "pages/main/fileView",
+    "pages/main/videoView"
   ],
   "subPackages": [],
   "window": {
@@ -38,29 +48,32 @@
       {
         "pagePath": "pages/main/study",
         "text": "学习",
-        "iconPath": "static/img/button/study.png",
-        "selectedIconPath": "static/img/button/studyHL.png"
+        "iconPath": "static/img/study.png",
+        "selectedIconPath": "static/img/studyHL.png"
       },
       {
         "pagePath": "pages/main/message",
         "text": "消息",
-        "iconPath": "static/img/button/message.png",
-        "selectedIconPath": "static/img/button/messageHL.png"
+        "iconPath": "static/img/message.png",
+        "selectedIconPath": "static/img/messageHL.png"
       },
       {
         "pagePath": "pages/main/teach",
         "text": "教学",
-        "iconPath": "static/img/button/service.png",
-        "selectedIconPath": "static/img/button/serviceHL.png"
+        "iconPath": "static/img/service.png",
+        "selectedIconPath": "static/img/serviceHL.png"
       },
       {
         "pagePath": "pages/main/user",
         "text": "我的",
-        "iconPath": "static/img/button/user.png",
-        "selectedIconPath": "static/img/button/userHL.png"
+        "iconPath": "static/img/user.png",
+        "selectedIconPath": "static/img/userHL.png"
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "uniStatistics": {
+    "enable": true
+  },
+  "permission": {},
+  "usingComponents": {}
 }

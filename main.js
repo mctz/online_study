@@ -16,24 +16,13 @@ Vue.prototype.$http = http
 Vue.prototype.$store = store
 Vue.prototype.loadJs = loadJs
 
-Vue.prototype.now = Date.now || function () {  
-    return new Date().getTime();  
-}; 
-Vue.prototype.date = function(){
-	return new Date(); 
-};
-
-Vue.prototype.isArray = Array.isArray || function (obj) {  
-    return obj instanceof Array;  
-};
-
-Vue.prototype.nvls = function(...obj){
-	for(var i=0;i<obj.length;i++){
-		if(obj[i]!=null && obj[i]!=""){
-			return obj[i];
-		}
-	}
-};
+Vue.prototype.debugLevel = 3;
+Vue.prototype.RESPONSE_OK = 0;
+Vue.prototype.RESPONSE_ERROR = 1;
+Vue.prototype.RESPONSE_TIPS = 2;
+Vue.prototype.ATTACHS = "/edu3/attachs/";
+Vue.prototype.ATTACHS_STU = "/edu3/attachs/common/students/";
+Vue.prototype.iconUrl = "https://7478-tx-gdxy-aa401e-1302676321.tcb.qcloud.la/gdxy/"
 
 Vue.prototype.CODE_SEX = "CodeSex";
 Vue.prototype.CODE_CERTTYPE = "CodeCertType";
@@ -60,12 +49,24 @@ Vue.prototype.CODE_OVERVIEWTYPE = "CodeCourseOverviewType";
 Vue.prototype.CODE_EXAMTYPE = "CodeExamType";
 Vue.prototype.CODE_WEEK = "CodeWeek";
 
-Vue.prototype.RESPONSE_OK = 0;
-Vue.prototype.RESPONSE_ERROR = 1;
-Vue.prototype.RESPONSE_TIPS = 2;
-Vue.prototype.ATTACHS = "/edu3/attachs/";
-Vue.prototype.ATTACHS_STU = "/edu3/attachs/common/students/";
-Vue.prototype.debugLevel = 2;
+Vue.prototype.now = Date.now || function () {  
+    return new Date().getTime();  
+}; 
+Vue.prototype.date = function(){
+	return new Date(); 
+};
+
+Vue.prototype.isArray = Array.isArray || function (obj) {  
+    return obj instanceof Array;  
+};
+
+Vue.prototype.nvls = function(...obj){
+	for(var i=0;i<obj.length;i++){
+		if(obj[i]!=null && obj[i]!=""){
+			return obj[i];
+		}
+	}
+};
 
 Vue.prototype.openFile = function(url) {
 	uni.downloadFile({
@@ -178,9 +179,9 @@ Vue.filter('getConfigValue', function (code) {
 Vue.prototype.schoolData = [
 	{
 		schoolCode: "gdxy",//学校代码
-		schoolName: "学苑在线",//学校名称
-		baseUrl: "http://127.0.0.1:18082/apps",//接口地址(ios)
-		imgUrl:"http://127.0.0.1:18081/xy"//成教系统地址
+		schoolName: "学苑教育",//学校名称
+		baseUrl: "http://msl1214.iok.la/apps",
+		imgUrl:"http://msl1214.vicp.io/xy"
 	}, {
 		schoolCode: '11078',
 		schoolName: '广州大学',

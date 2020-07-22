@@ -1,18 +1,18 @@
 <template>
     <view class="content" style="text-align: center;width: 95%;">
 		<view style="padding-left: 10px;padding-right: 10px;">
-			<view :style="{backgroundImage: 'url(../../../static/img/course_back1.png)',width:'100%',height:'95px'}">
-				<view style="color:#E5E5E5;font-size: large;letter-spacing: 5px;">
-					<br>{{courseName}}
+			<view :style="{backgroundImage: 'url('+iconUrl+'course_back.jpg)',width:'100%',height:'95px'}">
+				<view style="color:#E5E5E5;font-size: 18px;letter-spacing: 3px;">
+					<text style="line-height: 60px;">{{courseName}}</text>
 				</view>
-				<view style="margin-top: 10px;color:#E5E5E5;font-size: 14px;">
+				<view style="color:#E5E5E5;font-size: 14px;">
 					<text>{{courseNature | getDictName(this.CODE_COURSENATURE) }}</text>
 					<text style="margin-left: 10px;">学分: {{creditHour}}</text>
 					<text style="margin-left: 10px;">学时: {{stydyHour}}</text>
 				</view>
 			</view>
 		</view>
-		<uni-segmented-control  style="width: 100%;" :current="current" :values="items" @clickItem="onClickItem" style-type="button" active-color="#007AFF"></uni-segmented-control>
+		<uni-segmented-control  style="width: 100%;" :current="current" :values="items" @clickItem="onClickItem" style-type="button" active-color="#0054a8"></uni-segmented-control>
 		<view v-if="current === 0">
 			<uni-collapse :accordion="true">
 				<uni-collapse-item v-for="(cd1,i) in courseD_1" :key="cd1" :title="cd1.type | getDictName('CodeCourseOverviewType')" 
@@ -27,21 +27,21 @@
 			<uni-collapse :accordion="true" >
 				<uni-collapse-item v-for="(cd2,i) in courseD_2" :key="i" v-if="i>0" :title="i +' '+ cd2.syllabusName" 
 					:show-animation="true" style="text-align: left;">
-					<view style="background-color:#F8F8F8; font-size: medium;">
+					<view style="background-color:#F8F8F8; font-size: 15px;">
 						<navigator :url="'./exam?syllabusId='+cd2.resourceid+'&courseId='+cd2.course+'&syllabusName='+cd2.syllabusName" open-type="navigate"
 							style="background-color: #E5E5E5;">
-							<icon-button src1="../../../static/img/exam.png" name="随堂练习"></icon-button>
+							<icon-button :src1="iconUrl+'exam.png'" name="随堂练习" style="color: #005500;"></icon-button>
 						</navigator>
-						<icon-button src1="../../../static/img/video.png" :showRight="false" name="视频课件"></icon-button>
+						<icon-button :src1="iconUrl+'video.png'" :showRight="false" name="视频课件" style="font-size: 16px;color: grey;"></icon-button>
 						<view class="border" v-for="(cd21,j) in courseD_21" :key="j" v-if="cd2.resourceid == cd21.syllabus && cd21.mateType=='2'"
-							style="line-height: 15px;font-size: 15px;padding-left: 20px;color:#0A98D5;padding-top: 7px;padding-bottom: 7px;">
-							<navigator open-type="navigate" :url="'../videoView?webUrl='+cd21.mateUrl+'&totalTime='+cd21.totalTime+'&courseId='+cd2.course+'&mateId='+cd21.resourceid">
+							style="line-height: 15px;font-size: 15px;padding-left: 20px;color:#0A98D5;padding-top: 10px;padding-bottom:10px;">
+							<navigator open-type="navigate" :url="'../videoView?webUrl='+cd21.mateUrl+'&syllabusId='+cd2.resourceid+'&totalTime='+cd21.totalTime+'&courseId='+cd2.course+'&mateId='+cd21.resourceid">
 								{{cd21.mateName}}
 							</navigator>
 						</view>
-						<icon-button src1="../../../static/img/document.png" :showRight="false" name="参考资料"></icon-button>
+						<icon-button :src1="iconUrl+'document.png'" :showRight="false" name="参考资料" style="font-size: 16px;color: grey;"></icon-button>
 						<view class="border" v-for="(cd21,j) in courseD_21" :key="j" v-if="cd2.resourceid == cd21.syllabus && cd21.mateType!='2'"
-							style="line-height: 15px;font-size: 15px;padding-left: 20px;color:#0A98D5;padding-top: 7px;padding-bottom: 7px;">
+							style="line-height: 15px;font-size: 15px;padding-left: 20px;color:#0A98D5;padding-top: 10px;padding-bottom: 10px;">
 							<navigator open-type="navigate" :url="'../fileView?webUrl='+cd21.mateUrl">
 								{{cd21.mateName}}
 							</navigator>
@@ -52,11 +52,11 @@
 		</view>
 		<view v-if="current === 2">
 			<navigator :url="'./exercise?courseId='+courseId" open-type="navigate">
-				<icon-button :src1="'../../../static/img/teach/homework.png'" name="课后作业"></icon-button>
+				<icon-button :src1="iconUrl+'teach/homework.png'" name="课后作业"></icon-button>
 			</navigator>
 			<view v-for="(item,index) in courseD_3" :key="index" style="background-color:#F8F8F8; font-size: medium;">
 				<navigator :url="'./topic?sectionId='+item.resourceid+'&sectionCode='+item.sectionCode+'&courseId='+courseId+'&sectionName='+item.sectionName" open-type="navigate">
-					<icon-button :src1="'../../../static/img/teach/'+item.sectionCode+'.png'" :name="item.sectionName"></icon-button>
+					<icon-button :src1="iconUrl+'teach/'+item.sectionCode+'.png'" :name="item.sectionName"></icon-button>
 				</navigator>
 			</view>
 		</view>
@@ -78,6 +78,7 @@
 				courseNature:"",
 				creditHour:"",
 				stydyHour:"",
+				iconUrl:this.iconUrl,
 				courseD_1:uni.getStorageSync("courseD_1"+this.courseId),
 				courseD_2:uni.getStorageSync("courseD_2"+this.courseId),
 				courseD_21:uni.getStorageSync("courseD_21"+this.courseId),
@@ -106,6 +107,9 @@
 			}
 			if(!uni.getStorageSync("bbsSection")){
 				await this.loadJs.reloadBbsSection();
+			}
+			if(!uni.getStorageSync("studyProgress")){
+				await this.loadJs.reloadStudyProgress(this.$store.baseInfoId);
 			}
 			this.courseD_1 = uni.getStorageSync("courseD_1"+this.courseId);
 			this.courseD_2 = uni.getStorageSync("courseD_2"+this.courseId);

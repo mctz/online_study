@@ -17,9 +17,7 @@
 	import mIcon from './m-icon/m-icon.vue'
 
 	export default {
-		components: {
-			mIcon
-		},
+		components: {mIcon},
 		props: {
 			/**
 			 * 输入类型
@@ -105,7 +103,6 @@
 		display: inline-flex;
 		flex-direction: row;
 		align-items: center;
-		/* width: 100%; */
 		flex: 1;
 		padding: 0 10px;
 	}

@@ -32,7 +32,7 @@
 						<view style="margin-top: 20px;">
 							<view class="cu-bar cu-bar-title bg-white margin-top">
 								<view class="action  text-black" style="width: 100%;">
-									<text style="width: 35%;">答：{{subject.result}}</text>
+									<text style="width: 35%;">答：{{subject.result==null?"":subject.result}}</text>
 									<view style="width: 65%;text-align: right;">
 										<view class="input-row" v-if="subject.isCountdown==='Y' && subject.commitStatus===0">
 											<text style="font-size: 15px;">限时答题：</text>

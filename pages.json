@@ -4,17 +4,21 @@
 			"path": "pages/login/login",
 			"style": {
 				"enablePullDownRefresh":false,
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "",
+				"app-plus":{
+					"titleNView":false
+				}
 			}
 		}, {
 			"path": "pages/login/pwd",
 			"style": {
+				"enablePullDownRefresh":false,
 				"navigationBarTitleText": "找回密码"
 			}
 		}, {
 			"path": "pages/login/wx",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "学苑教育"
 			}
 		}, {
 			"path": "pages/main/study",
@@ -127,6 +131,12 @@
 				"navigationBarTitleText": "论坛"
 			}
 		}, {
+			"path": "pages/main/study/question",
+			"style": {
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText": "提问"
+			}
+		}, {
 			"path": "pages/main/study/reply",
 			"style": {
 				"navigationBarTitleText": "回复"
@@ -134,7 +144,6 @@
 		}, {
 			"path": "pages/main/study/exercise",
 			"style": {
-				/* "enablePullDownRefresh":false, */
 				"navigationBarTitleText": "课后作业"
 			}
 		}, {
@@ -143,15 +152,18 @@
 				"navigationBarTitleText": ""
 			}
 		}, {
+			"path": "pages/main/iframe",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		}, {
 			"path": "pages/main/fileView",
 			"style": {
-				"enablePullDownRefresh":false,
 				"navigationBarTitleText": ""
 			}
 		}, {
 			"path": "pages/main/videoView",
 			"style": {
-				"enablePullDownRefresh":false,
 				"navigationBarTitleText": ""
 			}
 		}
@@ -160,27 +172,29 @@
 		"color": "#7a7e83",
 		"selectedColor": "#0faeff",
 		"backgroundColor": "#ffffff",
-		"list": [{
-			"pagePath": "pages/main/study",
-			"text": "学习",
-			"iconPath": "static/img/button/study.png",
-			"selectedIconPath": "static/img/button/studyHL.png"
-		},{
-			"pagePath": "pages/main/message",
-			"text": "消息",
-			"iconPath": "static/img/button/message.png",
-			"selectedIconPath": "static/img/button/messageHL.png"
-		},{
-			"pagePath": "pages/main/teach",
-			"text": "教学",
-			"iconPath": "static/img/button/service.png",
-			"selectedIconPath": "static/img/button/serviceHL.png"
-		}, {
-			"pagePath": "pages/main/user",
-			"text": "我的",
-			"iconPath": "static/img/button/user.png",
-			"selectedIconPath": "static/img/button/userHL.png"
-		}]
+		"list": [
+			{
+				"pagePath": "pages/main/study",
+				"text": "学习",
+				"iconPath": "static/img/study.png",
+				"selectedIconPath": "static/img/studyHL.png"
+			},{
+				"pagePath": "pages/main/message",
+				"text": "消息",
+				"iconPath": "static/img/message.png",
+				"selectedIconPath": "static/img/messageHL.png"
+			},{
+				"pagePath": "pages/main/teach",
+				"text": "教学",
+				"iconPath": "static/img/service.png",
+				"selectedIconPath": "static/img/serviceHL.png"
+			},{
+				"pagePath": "pages/main/user",
+				"text": "我的",
+				"iconPath": "static/img/user.png",
+				"selectedIconPath": "static/img/userHL.png"
+			}
+		]
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

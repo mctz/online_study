@@ -5,10 +5,10 @@
 			<text style="width: 25%;">学习时长</text>
 			<text style="width: 25%;">总时长</text>
 		</view>
-		<view class="input-row border" style="color: grey;line-height: 25px;margin-top: 10px;font-size: 15px;" v-for="(n, i) in studyProgress" v-bind:key="i">
-			<text style="width: 50%;">{{studyProgress[i].courseName}}</text>
-			<text style="width: 25%;">{{studyProgress[i].learnTotalTime | formatLong}}</text>
-			<text style="width: 25%;">{{studyProgress[i].totalTime | formatLong}}</text>
+		<view class="input-row border" style="color: grey;line-height: 25px;margin-top: 10px;font-size: 15px;" v-for="(item, i) in studyProgress" :key="i">
+			<text style="width: 50%;">{{item.courseName}}</text>
+			<text style="width: 25%;">{{item.learnTotalTime | formatLong}}</text>
+			<text style="width: 25%;">{{item.totalTime | formatLong}}</text>
 		</view>
 	</view>
 </template> 

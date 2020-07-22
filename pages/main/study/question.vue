@@ -80,8 +80,6 @@
 				this.question.sectionId = this.sectionId;
 				this.question.userId = this.$store.userId;
 				this.question.studentBaseId = this.$store.baseInfoId;
-				//{courseId:11,syllabusId:11,title:11,content:11,topicType:1,sectionId:11,userId:11,parentId:11,studentBaseId:11}
-				console.log(this.question);
 				this.$http.post('/bbsTopic/raiseQuestion', {
 					"topicJsonStr":JSON.stringify(this.question)
 				}).then(res => {

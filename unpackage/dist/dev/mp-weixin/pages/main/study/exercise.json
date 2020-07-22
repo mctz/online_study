@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "课后作业",
+  "usingComponents": {
+    "jyf-parser": "/components/jyf-parser/jyf-parser",
+    "uni-countdown": "/components/uni-countdown/uni-countdown"
+  }
+}

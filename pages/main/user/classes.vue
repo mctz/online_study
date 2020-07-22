@@ -19,6 +19,20 @@
 		<line-text ltext="教学点联系人" :rtext="classInfo.linkman"></line-text>
 		<line-text ltext="教学点联系方式" :rtext="classInfo.contectCall"></line-text>
 		<line-text ltext="备注" :rtext="classInfo.memo"></line-text>
+		<uni-collapse :accordion="true" >
+			<uni-collapse-item title="班名册" :show-animation="true" style="text-align: center;">
+				<view class="input-row" style="font-size: 16px;background-color: #9ebabf;">
+					<view style="width: 40%;">学号</view>
+					<view style="width: 20%;">姓名</view>
+					<view style="width: 40%;">联系方式</view>
+				</view>
+				<view v-for="(item,index) in classInfo.studenInfoVos" :key="index"  class="input-row" style="font-size: 15px;background-color: #f4f4f4;">
+					<view style="width: 40%;">{{item.studyNo}}</view>
+					<view style="width: 20%;">{{item.name}}</view>
+					<view style="width: 40%;color: grey;">{{item.mobile.substring(0,item.mobile.length-4)}}****</view>
+				</view>
+			</uni-collapse-item>
+		</uni-collapse>
 	</view>
 </template> 
 

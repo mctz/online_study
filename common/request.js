@@ -6,7 +6,14 @@ import Vue from 'vue';
 let debugLevel = uni.getStorageSync("debugLevel");
 let baseUrl = uni.getStorageSync("baseUrl");
 
+function getLast(){
+	baseUrl = uni.getStorageSync("baseUrl");
+	debugLevel = uni.getStorageSync("debugLevel");
+}
+
+
 function getToken(){
+	getLast();
 	var secretdate = dokey.secretdate();
 	var secreted = md5(secretdate + dokey.getkey());
 	return secretdate+'&'+secreted;
@@ -153,9 +160,21 @@ const httpTokenRequest = (opts, data) => {
     return promise
 };
  
+ function downloadFile(url){
+ 	var iframe = document.getElementById('#downloadIfram');
+	if(iframe==null){
+		iframe = document.createElement("downloadIfram");
+		iframe.id = "downloadIfram";
+	}
+ 	iframe.src = url;
+ 	iframe.style.display = "none"
+ 	document.body.appendChild(iframe);
+ }
+ 
 export default {
 	get,
 	post,
 	httpRequest,
-	httpTokenRequest					
+	httpTokenRequest,
+	downloadFile
 }

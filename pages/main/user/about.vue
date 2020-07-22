@@ -2,7 +2,7 @@
 	
 	<view class="content" style="margin-bottom: 50px;">
 		<view style="text-align: center;">
-			<image src="../../../static/img/ic_logo.png" mode="widthFix" style="text-align: center;width: 70%;"></image>
+			<image src="this.iconUrl+'ic_logo.png'" mode="widthFix" style="text-align: center;width: 70%;"></image>
 		</view>
 		<text style="line-height: 27px;color: #777777;padding: 10px;" decode="true">{{text}}</text>
 		<text style="font-weight: bold;margin-top: 50px;margin-left: 15px;">技术支持</text>

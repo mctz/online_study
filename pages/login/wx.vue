@@ -50,14 +50,14 @@
 			<navigator v-if="!(index===3 && (item.url==='' || item.url===null))" 
 				:url="'../main/webView?webUrl='+item.url">
 				<view class="input-row border" style="padding-top: 5px;padding-bottom: 5px;">
-					<image src="../../static/img/button/ic-right.png" style="width: 6%;margin-top: 7px;" mode="widthFix"></image>
+					<image :src="iconUrl+'button/ic-right.png'" style="width: 6%;margin-top: 7px;" mode="widthFix"></image>
 					<text style="font-size: medium;padding-left: 5px;">{{item.title}}</text>
 				</view>
 			</navigator>
 			<view v-else>
 				<uni-collapse :accordion="true" >
 					<uni-collapse-item  title="缴费信息(请使用微信扫码)" :show-animation="true" open="true" style="text-align: left;letter-spacing: 2px;">
-						<image :src="'../../static/img/barcode/pay_'+schoolCode+'.jpg'" style="width: 50%;margin-left: 20px;" mode="widthFix"></image>
+						<image :src="iconUrl+'barcode/pay_'+schoolCode+'.jpg'" style="width: 60%;margin-left: 20px;" mode="widthFix" @tap="previewImg(iconUrl+'barcode/pay_'+schoolCode+'.jpg')"></image>
 					</uni-collapse-item>
 				</uni-collapse>
 			</view>
@@ -71,8 +71,10 @@
 		components:{titleButton},
 		data() {
 			return {
+				schoolName:this.$store.schoolName,
 				schoolCode:this.$store.schoolCode,
 				imgUrl:this.$store.imgUrl,
+				iconUrl:this.iconUrl,
 				current: 0,
 				items: ['校院概况','教学教务','更多'],
 				overview:['','报到流程','教学点分布','报到须知','分点查询'],
@@ -94,18 +96,15 @@
 			if(!uni.getStorageSync('config_portal.url')){
 				this.update();
 			}
+			uni.setNavigationBarTitle({
+				title:this.$store.schoolName
+			})
 		},
 		methods: {
 			onClickItem(e) {
 				if (this.current !== e.currentIndex) {
 					this.current = e.currentIndex;
 				}
-			},
-			toStart: function() {
-				this.$refs.barcode.start({
-					conserve: true,
-					filename: '../../barcode/pay_zqyz.png'
-				});
 			},
 			async update(){
 				uni.showLoading({});
@@ -116,7 +115,16 @@
 				this.titleList[2].url = this.nvls(uni.getStorageSync('config_enrollment.url'),uni.getStorageSync('config_portal.url'));
 				this.titleList[3].url = this.nvls(uni.getStorageSync('config_payment.payonline.url'));
 				uni.hideLoading();
-			}
+			},
+			previewImg(logourl) {
+				let _this = this;
+				let imgsArray = [];
+				imgsArray[0] = logourl
+				uni.previewImage({
+					current: 0,
+					urls: imgsArray
+				});
+			},
 		}
 	}
 </script>

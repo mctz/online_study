@@ -3,28 +3,28 @@
 		<view v-if="!planCourse[0]" style="text-align: center;line-height: 100px;color: grey;">
 			暂无在线课程
 		</view>
-		<view v-else v-for="(item,i) in planCourse" :key="i">
-			<view class="input-row border" v-if="item.hasResource == 'Y'" style="height: 200rpx;font-size: 15px;">
+		<view v-else v-for="(item,i) in planCourse" :key="i" >
+			<view class="input-row border" v-if="item.hasResource == 'Y'" style="height: 200rpx;font-size: 15px;width: 100%;">
 				<view style="width: 25%;text-align: center;padding-top: 5px;">
-					<image :src="item.cover!=null?(imgUrl+item.cover):'../../static/img/course.png'" style="width: 70%;" mode="widthFix"></image>
+					<image :src="item.cover!=null?(imgUrl+item.cover):(iconUrl+'course.png')" style="width: 70%;" mode="widthFix"></image>
 				</view>
 				<template v-if="item.isCurTermCourse == 'Y'">
-					<view style="width:40%;padding-top: 20px;line-height: 30px;">
+					<view style="width:40%;padding-top: 15px;line-height: 30px;">
 						<navigator :url="'./study/course?course='+item.course+'&courseName='+item.courseName+
 							'&courseNature='+item.courseNature+'&creditHour='+item.creditHour+'&stydyHour='+item.stydyHour" open-type="navigate">
-							<text>{{item.courseName}}</text><br>
-							<text>{{item.term | getDictName('CodeTermType')}}</text>
+							<text style="color: #517599;">{{item.courseName}}</text><br>
+							<text style="color: #517599;">{{item.term | getDictName('CodeTermType')}}</text>
 						</navigator>
 					</view>
-					<view style="width: 20%;text-align: left;">
-						<canvas :canvas-id="'canvasPie'+i" :id="'canvasPie'+i" class="charts"></canvas>
+					<view style="width: 25%;text-align: left;">
+						<canvas :canvas-id="'canvasPie'+i" :id="'canvasPie'+i" class="charts" style="width: 100%;"></canvas>
 					</view>
-					<view style="width: 10%;text-align: right;">
-						<image src="../../static/img/button/ic-right.png" style="width: 50%;margin-top: 40px;" mode="widthFix"></image>
+					<view style="width: 5%;text-align: right;">
+						<image :src="iconUrl+'button/ic-right.png'" style="width: 90%;margin-top: 40px;" mode="widthFix"></image>
 					</view>
 				</template>
 				<template v-else>
-					<view style="width:60%;padding-top: 20px;line-height: 30px;color:grey;">
+					<view style="width:70%;padding-top: 20px;line-height: 30px;color:grey;">
 						<text>{{item.courseName}}</text><br>
 						<text>{{item.term | getDictName('CodeTermType')}}</text>
 					</view>
@@ -43,6 +43,7 @@
 		data() {
 			return {
 				imgUrl:this.$store.imgUrl+this.ATTACHS,
+				iconUrl:'https://7478-tx-gdxy-aa401e-1302676321.tcb.qcloud.la/gdxy/',
 				planCourse:uni.getStorageSync("planCourse"),
 				studyProgress:uni.getStorageSync("courseTotalTime")
 			}
@@ -60,6 +61,7 @@
 					url: '../login/login'
 				});
 			}
+			
 			_self = this;
 			if(!uni.getStorageSync("planCourse")){
 				await this.loadJs.reloadTeachPlan(this.$store.baseInfoId);
@@ -87,7 +89,6 @@
 							let Pie = {series:[{"name":"","data":this.studyProgress[j].learnTotalTime,"color": "#00aa00"},
 										{"name":"","data":this.studyProgress[j].totalTime-this.studyProgress[j].learnTotalTime,"color": "#e5e5e5"}]};
 							_self.showPie("canvasPie"+i,Pie,Math.round(this.studyProgress[j].learnTotalTime*1000/this.studyProgress[j].totalTime)/10);
-							//console.log(this.studyProgress[j].learnTotalTime,this.studyProgress[j].totalTime);
 							break;
 						}
 					}

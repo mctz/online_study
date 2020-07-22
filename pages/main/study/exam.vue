@@ -45,13 +45,17 @@
 						<radio-group v-if="subject.courseExamVO.examType==='1'" class="block"  @change="RadioboxChange">
 							<label v-for="(option,j) in optionList" :key="j" v-if="j<subject.courseExamVO.answerOptionNum" style="margin-right: 25px;">
 								<radio :value="option" :class="subject.isSubmit==='Y'?'submited':''" :disabled="subject.isSubmit==='Y'"
-									:checked="(subject.studentAnswer && subject.studentAnswer.indexOf(option) > -1)?true:false">{{option}}</radio>
+									:checked="(subject.studentAnswer && subject.studentAnswer.indexOf(option) > -1)?true:false">
+									<text style="margin-left: 5px;">{{option}}</text>
+								</radio>
 							</label>
 						</radio-group>
 						<checkbox-group v-else-if="subject.courseExamVO.examType==='2'" class="block"  @change="CheckboxChange">
 							<label v-for="(option,j) in optionList" :key="j" v-if="j<subject.courseExamVO.answerOptionNum" style="margin-right: 25px;">
 								<checkbox :value="option" :class="subject.isSubmit==='Y'?'submited':''" :disabled="subject.isSubmit==='Y'"
-									:checked="(subject.studentAnswer && subject.studentAnswer.indexOf(option) > -1)?true:false">{{option}}</checkbox>
+									:checked="(subject.studentAnswer && subject.studentAnswer.indexOf(option) > -1)?true:false">
+									<text style="margin-left: 5px;">{{option}}</text>
+								</checkbox>
 							</label>
 						</checkbox-group>
 						<radio-group v-else-if="subject.courseExamVO.examType==='3'" class="block"  @change="RadioboxChange">
@@ -118,10 +122,10 @@
 				</view>
 			</template>
 			<template v-else-if="courseExam.residueRedoTimes>0">
-				<view class="action" @click="re('save')">
+				<view class="action" @click="redo(courseExam.residueRedoTimes-1)">
 					<view style="color: green;">本章重做【{{courseExam.residueRedoTimes}}】</view>
 				</view>
-				<view class="action" @click="save('submit')">
+				<view class="action" @click="redo(0)">
 					<view style="color: red;">放弃重做</view>
 				</view>
 			</template>
@@ -149,12 +153,16 @@
 				await this.loadJs.reloadCourseExam(this.syllabusId,this.$store.baseInfoId);
 			}
 			this.courseExam = uni.getStorageSync("courseExam_"+this.syllabusId);
-			this.subjectList = this.courseExam.examVOList;
+			if(this.courseExam){
+				this.subjectList = this.courseExam.examVOList;
+			}
 		},
 		onPullDownRefresh() {
 			this.loadJs.reloadCourseExam(this.syllabusId,this.$store.baseInfoId);
 			this.courseExam = uni.getStorageSync("courseExam_"+this.syllabusId);
-			this.subjectList = this.courseExam.examVOList;
+			if(this.courseExam){
+				this.subjectList = this.courseExam.examVOList;
+			}
 			uni.stopPullDownRefresh();
 		},
 		onLoad(option) {
@@ -231,6 +239,26 @@
 						icon:"none",
 						title: result.msg,
 					});
+				});
+			},
+			async redo(count){
+				uni.showLoading({
+					title:"提交中"
+				});
+				var url = "/studentAnswer/syllabusRedo/"+this.$store.baseInfoId+"/"+this.syllabusId+"/unit_exam";
+				if(count==0){
+					url = "/studentAnswer/giveUpRedo/"+this.$store.baseInfoId+"/"+this.syllabusId;
+				}
+				await this.$http.get(url, {
+				}).then(res => {
+					let result = JSON.parse(res);
+					uni.hideLoading();
+					setTimeout(this.loadJs.reloadCourseExam(this.syllabusId,this.$store.baseInfoId),2000);
+					uni.showToast({
+						icon:"none",
+						title: result.msg,
+					});
+					this.courseExam.residueRedoTimes = count;
 				});
 			}
 		}

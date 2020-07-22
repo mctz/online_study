@@ -4,6 +4,7 @@
     "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control",
     "uni-collapse": "/components/uni-collapse/uni-collapse",
     "uni-collapse-item": "/components/uni-collapse-item/uni-collapse-item",
-    "jyf-parser": "/components/jyf-parser/jyf-parser"
+    "jyf-parser": "/components/jyf-parser/jyf-parser",
+    "icon-button": "/components/icon-button"
   }
 }

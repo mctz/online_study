@@ -6,6 +6,7 @@ const store = new Vuex.Store({
 	schoolCode:"",
 	baseUrl:"",
 	imgUrl:"",
+	userId:"",
 	baseInfoId:"",
 	account:"",
 	state: {

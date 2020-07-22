@@ -1,6 +1,6 @@
 {
   "enablePullDownRefresh": false,
-  "navigationBarTitleText": "登录",
+  "navigationBarTitleText": "",
   "usingComponents": {
     "m-input": "/components/m-input"
   }

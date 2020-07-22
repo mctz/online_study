@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "学苑教育",
+  "usingComponents": {
+    "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control",
+    "uni-collapse": "/components/uni-collapse/uni-collapse",
+    "uni-collapse-item": "/components/uni-collapse-item/uni-collapse-item",
+    "title-button": "/components/title-button"
+  }
+}

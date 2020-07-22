@@ -4,6 +4,7 @@
     "uni-collapse": "/components/uni-collapse/uni-collapse",
     "uni-collapse-item": "/components/uni-collapse-item/uni-collapse-item",
     "wm-watermark": "/components/wm-watermark/wm-watermark",
+    "uni-popup": "/components/uni-popup/uni-popup",
     "line-text": "/components/line-text",
     "icon-button": "/components/icon-button"
   }
